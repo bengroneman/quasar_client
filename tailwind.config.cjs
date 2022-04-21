@@ -27,10 +27,9 @@ module.exports = {
 				'safe-green': '#6eeb83'
 			},
 			fontFamily: {
-				// 'display': ['Baskerville', 'sans'],
 				// 'body': ['Jost', 'sans-serif']
-				display: ['Besley', 'sans'],
-				body: ['Young', 'sans-serif']
+				'display': ['Besley Regular', 'sans'],
+				'body': ['Jost', 'serif']
 			}
 		}
 	},

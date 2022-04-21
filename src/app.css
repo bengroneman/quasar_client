@@ -16,10 +16,7 @@
 		@apply text-2xl font-bold text-d-purple pt-4;
 	}
 
-	h1,
-	h2,
-	h3,
-	h4 {
+	h1, h2, h3, h4 {
 		@apply font-display;
 	}
 	/* END Font Styles */

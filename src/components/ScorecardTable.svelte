@@ -6,24 +6,17 @@
 	import { browser } from '$app/env';
 	import _ from 'lodash';
 	let measure_rows;
-	let departments;
 	let department_names = [];
-
 	let token;
+
 	if (browser) {
 		token = window.sessionStorage.getItem('token');
 	}
 	// TODO: only fetch rows if they aren't in indexDB storage
 	const fetchMeasureRows = (async () => {
-		const response = await get(`api/v1/scorecard/overview/6`, token);
+		const response = await get('api/v1/scorecard/overview/?hospital_id=6&year=2022', token);
 		measure_rows = await response;
 		return measure_rows;
-	})();
-
-	const fetchDepartments = (async () => {
-		const response = await get('api/v1/departments/6', token);
-		departments = await response;
-		return departments;
 	})();
 
 	function addDeptName(name) {
@@ -36,6 +29,7 @@
 	}
 
 	function colorCodeCell(goal, value, up) {
+
 		if (_.isEqual(value.toString(), value)) { return '_table-cell' }
 		const value_is_good_and_above_goal = up.toLowerCase() === 'up' && value >= goal
 		const value_is_good_and_below_goal = up.toLowerCase() === 'down' && value <= goal
@@ -85,13 +79,9 @@
 				<h1 class="text-xl font-light text-gray-900">
 				  <span class="block font-bold">Facility: Trios Healthcare</span>
 				</h1>
-				{#await fetchDepartments then departments}
 				  <div class="grid grid-cols-6 w-full gap-4">
-					<Combobox options={departments} />
+					<Combobox options={department_names} />
 				  </div>
-				  {:catch error}
-					<p>{error}</p>
-				{/await}
 			  </div>
 			</div>
 			<div class="mt-8 flex flex-col">
