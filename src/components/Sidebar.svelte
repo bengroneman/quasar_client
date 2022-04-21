@@ -24,13 +24,13 @@
 		{
 			icon: ChartIcon,
 			title: 'Scorecard Overview',
-			path: '/main/scorecard/overview',
+			path: '/scorecard/overview',
 			enabled: true
 		},
 		{
 			icon: MeasureIcon,
 			title: 'Create a Measure',
-			path: '/main/scorecard/overview',
+			path: '/scorecard/measures/create',
 			enabled: true
 		}
 	];
