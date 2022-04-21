@@ -1,86 +1,89 @@
 @tailwind base;
 @tailwind components;
 @layer base {
-	/* START Font Styles */
+  /* START Font Styles */
 
-	html,
-	body {
-		@apply font-body text-base;
-	}
+  html,
+  body {
+    @apply font-body text-base;
+  }
 
-	h1 {
-		@apply text-3xl font-bold text-gray-900 truncate;
-	}
+  h1 {
+    @apply text-3xl font-bold text-gray-900 truncate;
+  }
 
-	h2 {
-		@apply text-2xl font-bold text-d-purple pt-4;
-	}
+  h2 {
+    @apply text-2xl font-bold text-d-purple pt-4;
+  }
 
-	h1, h2, h3, h4 {
-		@apply font-display;
-	}
-	/* END Font Styles */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+  /* END Font Styles */
 }
 
 @layer components {
-	/* START Form Styles */
-	.form-field {
-		@apply relative border sm:col-span-4 border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600;
-	}
-	.form-label {
-		@apply absolute -top-2 left-2 -mt-px inline-block px-1 bg-white text-xs font-medium text-gray-900;
-	}
-	.form-input {
-		@apply block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm;
-	}
-	.form-select {
-		@apply text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md;
-	}
-	.input-link-primary {
-		@apply text-sky-600 underline cursor-pointer hover:text-sky-400;
-	}
-	.combobox {
-		@apply w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-12 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm py-2;
-	}
-	/* END Form Styles */
+  /* START Form Styles */
+  .form-field {
+    @apply relative border sm:col-span-4 border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600;
+  }
+  .form-label {
+    @apply absolute -top-2 left-2 -mt-px inline-block px-1 bg-white text-xs font-medium text-gray-900;
+  }
+  .form-input {
+    @apply block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm;
+  }
+  .form-select {
+    @apply text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md;
+  }
+  .input-link-primary {
+    @apply text-sky-600 underline cursor-pointer hover:text-sky-400;
+  }
+  .combobox {
+    @apply w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-12 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm py-2;
+  }
+  /* END Form Styles */
 
-	/* START MISC Styles */
-	.sub-heading {
-		@apply text-2xl font-bold text-dark-orchid sm:text-3xl md:text-4xl pt-4;
-	}
-	a.nuxt-link-active {
-		@apply bg-indigo-50 border-indigo-600 text-indigo-600;
-	}
-	.navbar-item {
-		@apply bg-gray-100 text-gray-900 flex items-center px-2 py-2 text-sm font-medium rounded-md;
-	}
-	.button-secondary {
-		@apply py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
-	}
-	.button-primary {
-		@apply ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-dark-orchid hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
-	}
-	.button-danger {
-		@apply ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-soft-rose hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-800;
-	}
-	.standard-svg {
-		@apply text-gray-500 mr-3 flex-shrink-0 h-6 w-6;
-	}
-	/* END MISC Styles */
+  /* START MISC Styles */
+  .sub-heading {
+    @apply text-2xl font-bold text-dark-orchid sm:text-3xl md:text-4xl pt-4;
+  }
+  a.nuxt-link-active {
+    @apply bg-indigo-50 border-indigo-600 text-indigo-600;
+  }
+  .navbar-item {
+    @apply bg-gray-100 text-gray-900 flex items-center px-2 py-2 text-sm font-medium rounded-md;
+  }
+  .button-secondary {
+    @apply py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+  }
+  .button-primary {
+    @apply ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-dark-orchid hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+  }
+  .button-danger {
+    @apply ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-soft-rose hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-800;
+  }
+  .standard-svg {
+    @apply text-gray-500 mr-3 flex-shrink-0 h-6 w-6;
+  }
+  /* END MISC Styles */
 
-	/* START Table Styles */
-	.table-header {
-		@apply py-2.5 pl-1 pr-3 text-left text-sm font-semibold font-body text-gray-900 border sm:pl-4;
-	}
-	._table-cell {
-		@apply whitespace-nowrap text-sm text-center text-gray-800 border border-gray-100 overflow-hidden;
-	}
-	.table-row {
-		@apply py-2;
-	}
-	.fixed-table-cell {
-		@apply block w-80 text-ellipsis pl-8;
-	}
+  /* START Table Styles */
+  .table-header {
+    @apply py-2.5 pl-1 pr-3 text-left text-sm font-semibold font-body text-gray-900 border sm:pl-4;
+  }
+  ._table-cell {
+    @apply whitespace-nowrap text-sm text-center text-gray-800 border border-gray-100 overflow-hidden;
+  }
+  .table-row {
+    @apply py-2;
+  }
+  .fixed-table-cell {
+    @apply block w-80 text-ellipsis pl-8;
+  }
 }
 
 @tailwind utilities;
