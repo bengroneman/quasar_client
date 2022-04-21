@@ -8,14 +8,14 @@
 
 	const startSearching = () => (searching = true);
 	const stopSearching = () => (searching = false);
-	function selectOption(opt) {
-		selectedOption = opt.title;
+	function selectOption(option) {
+		selectedOption = option;
 	};
 
 	// Search
-	$: filteredOptions = options.filter((opts) => {
-		let lower_name = opts.name.toLowerCase();
-		return lower_name.includes(selectedOption.toLowerCase());
+	$: filteredOptions = options.filter((option) => {
+		const lower_option = option.toLowerCase();
+		return lower_option.includes(selectedOption.toLowerCase());
 	});
 </script>
 
