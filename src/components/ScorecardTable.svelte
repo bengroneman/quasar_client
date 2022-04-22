@@ -1,6 +1,7 @@
 <script>
   // TODO: Group by departments
   import Combobox from '../components/Combobox.svelte';
+  import PlusIcon from "../components/icons/PlusIcon.svelte";
 
   import { get, post } from '../helpers/utils';
   import { browser } from '$app/env';
@@ -115,11 +116,19 @@
                             {#if !(department_names.indexOf(row.dept_name) > -1)}
                               <tr class="border-gray-100 bg-gray-50 table-row">
                                 <th
-                                  colspan="15"
+                                  colspan="1"
                                   scope="colgroup"
-                                  class="table-header font-display text-orange-soda uppercase tracking-wide"
+                                  class="table-header font-display text-orange-soda tracking-wide"
                                 >
-                                  {addDeptName(row.dept_name)}
+                                  <span class="font-bold text-lg">
+                                    {addDeptName(row.dept_name)}
+                                  </span>
+                                  <div class="input-link-primary flex pt-2">
+                                  <kbd class="inline-flex items-center border border-gray-200 rounded px-2 mr-2 text-sm font-sans font-medium text-gray-400">
+                                    <span class="pr-2">Add measure to department</span>
+                                    <PlusIcon />
+                                  </kbd>
+                                </div>
                                 </th>
                               </tr>
                             {/if}
@@ -138,7 +147,7 @@
                                 {:else if row.good.toLowerCase() === 'down'}
                                   <span class="text-red-500 font-bold"> -</span>
                                 {:else}
-                                  <span />
+                                  <span></span>
                                 {/if}
                               </td>
                               {#each row.metrics as metric}

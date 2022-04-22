@@ -24,7 +24,7 @@
       }
       document.cookie = serialize('token', token);
     }
-    goto('/main/dashboard');
+    goto('/scorecard/dashboard');
   }
 </script>
 

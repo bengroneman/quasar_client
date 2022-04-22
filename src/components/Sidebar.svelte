@@ -18,7 +18,7 @@
     {
       icon: HomeIcon,
       title: 'Home',
-      path: '/main/dashboard',
+      path: '/scorecard/dashboard',
       enabled: true
     },
     {
