@@ -28,8 +28,8 @@ module.exports = {
       },
       fontFamily: {
         // 'body': ['Jost', 'sans-serif']
-        display: ['Besley Regular', 'sans'],
-        body: ['Jost', 'serif']
+        display: ['Jost', 'sans'],
+        body: ['Fira Code', 'mono']
       }
     }
   },

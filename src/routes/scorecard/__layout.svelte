@@ -1,20 +1,20 @@
 <script context="module">
-  import { get } from '../../helpers/utils'
+  import { get } from '../../helpers/utils';
   import Sidebar from '../../components/Sidebar.svelte';
-  import { measure_rows } from '../../stores/scorecardStore.js'
+  import { measure_rows } from '../../stores/scorecardStore.js';
 
   let local_measure_rows;
   /** @type {import('./[slug]').Load} */
   export async function load({ params, fetch, session, stuff }) {
     if (measure_rows.length < 1) {
       const response = await get('api/v1/scorecard/overview/?hospital_id=6&year=2022');
-      measure_rows.set(await response.json())
+      measure_rows.set(await response.json());
     }
-    measure_rows.subscribe(rows => {
-      local_measure_rows = rows
-    })
-    console.log(local_measure_rows)
-    return {status: 200, props: local_measure_rows}
+    measure_rows.subscribe((rows) => {
+      local_measure_rows = rows;
+    });
+    console.log(local_measure_rows);
+    return { status: 200, props: local_measure_rows };
   }
 </script>
 
@@ -141,4 +141,3 @@
     </main>
   </div>
 </div>
-

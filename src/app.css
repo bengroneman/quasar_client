@@ -3,8 +3,7 @@
 @layer base {
   /* START Font Styles */
 
-  html,
-  body {
+  html, body, span, p, textarea input {
     @apply font-body text-base;
   }
 
@@ -16,10 +15,7 @@
     @apply text-2xl font-bold text-d-purple pt-4;
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
+  h1, h2, h3, h4 {
     @apply font-display;
   }
   /* END Font Styles */
@@ -44,6 +40,9 @@
   }
   .combobox {
     @apply w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-12 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm py-2;
+  }
+  .check-box {
+    @apply bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
   }
   /* END Form Styles */
 

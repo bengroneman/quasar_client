@@ -1,7 +1,7 @@
 <script>
   // TODO: Group by departments
   import Combobox from '../components/Combobox.svelte';
-  import PlusIcon from "../components/icons/PlusIcon.svelte";
+  import PlusIcon from '../components/icons/PlusIcon.svelte';
 
   import { get, post } from '../helpers/utils';
   import { browser } from '$app/env';
@@ -124,11 +124,13 @@
                                     {addDeptName(row.dept_name)}
                                   </span>
                                   <div class="input-link-primary flex pt-2">
-                                  <kbd class="inline-flex items-center border border-gray-200 rounded px-2 mr-2 text-sm font-sans font-medium text-gray-400">
-                                    <span class="pr-2">Add measure to department</span>
-                                    <PlusIcon />
-                                  </kbd>
-                                </div>
+                                    <kbd
+                                      class="inline-flex items-center border border-gray-200 rounded px-2 mr-2 text-sm font-sans font-medium text-gray-400"
+                                    >
+                                      <span class="pr-2">Add measure to department</span>
+                                      <PlusIcon />
+                                    </kbd>
+                                  </div>
                                 </th>
                               </tr>
                             {/if}
@@ -147,7 +149,7 @@
                                 {:else if row.good.toLowerCase() === 'down'}
                                   <span class="text-red-500 font-bold"> -</span>
                                 {:else}
-                                  <span></span>
+                                  <span />
                                 {/if}
                               </td>
                               {#each row.metrics as metric}
