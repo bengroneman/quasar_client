@@ -1,20 +1,19 @@
 <script context="module">
   import { get } from '../../helpers/utils';
+  import { browser } from '$app/env'
   import Sidebar from '../../components/Sidebar.svelte';
-  import { measure_rows } from '../../stores/scorecardStore.js';
 
-  let local_measure_rows;
   /** @type {import('./[slug]').Load} */
   export async function load({ params, fetch, session, stuff }) {
-    if (measure_rows.length < 1) {
-      const response = await get('api/v1/scorecard/overview/?hospital_id=6&year=2022');
-      measure_rows.set(await response.json());
+    if (browser) {
+      const rows = window.sessionStorage.getItem('measure_rows')
+      if (rows === null) {
+        const response = await get('api/v1/scorecard/overview/?hospital_id=6&year=2022');
+        window.sessionStorage.setItem('measure_rows', JSON.stringify(response))
+        return { status: 200 }
+      }
     }
-    measure_rows.subscribe((rows) => {
-      local_measure_rows = rows;
-    });
-    console.log(local_measure_rows);
-    return { status: 200, props: local_measure_rows };
+    return { status: 200, message: 'Failed to set storage' }
   }
 </script>
 
