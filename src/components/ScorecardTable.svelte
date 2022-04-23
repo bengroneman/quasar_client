@@ -1,12 +1,12 @@
-<script>
-  // TODO: Group by departments
+<script context="module">
   import Combobox from '../components/Combobox.svelte';
   import PlusIcon from '../components/icons/PlusIcon.svelte';
 
   import { get, post } from '../helpers/utils';
   import { browser } from '$app/env';
   import _ from 'lodash';
-  let measure_rows;
+
+  export let measure_rows;
   let department_names = [];
   let token;
 

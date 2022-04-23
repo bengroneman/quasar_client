@@ -6,10 +6,10 @@
   /** @type {import('./[slug]').Load} */
   export async function load({ params, fetch, session, stuff }) {
     if (browser) {
-      const rows = window.sessionStorage.getItem('measure_rows')
-      if (rows === null) {
+      if (window.sessionStorage.getItem('measure_rows') === null) {
         const response = await get('api/v1/scorecard/overview/?hospital_id=6&year=2022');
         window.sessionStorage.setItem('measure_rows', JSON.stringify(response))
+
         return { status: 200 }
       }
     }
