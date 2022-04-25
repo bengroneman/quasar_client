@@ -1,22 +1,33 @@
 <script context="module">
-  import { get } from '../../helpers/utils';
+  import { get } from '../../helpers/utils'
   import { browser } from '$app/env'
-  import Sidebar from '../../components/Sidebar.svelte';
+  import Sidebar from '../../components/Sidebar.svelte'
+  import _ from 'lodash'
 
   /** @type {import('./[slug]').Load} */
   export async function load({ params, fetch, session, stuff }) {
     if (browser) {
       if (window.sessionStorage.getItem('measure_rows') === null) {
-        const response = await get('api/v1/scorecard/overview/?hospital_id=6&year=2022');
+        const response = await get('api/v1/scorecard/overview?hospital_id=6&year=2022');
+
+        let department_values = response.map(val => val.dept_name)
+        let departments = _.uniq(department_values)
+
+        let jc_code_values = response.map(val =>  {
+          if (val.regulation_code !== 'null') { return val.regulation_code }
+        })
+        let jc_codes = _.uniq(jc_code_values)
+
+        window.sessionStorage.setItem('departments', JSON.stringify(departments))
+        window.sessionStorage.setItem('jc_codes', JSON.stringify(jc_codes))
         window.sessionStorage.setItem('measure_rows', JSON.stringify(response))
 
         return { status: 200 }
       }
     }
-    return { status: 200, message: 'Failed to set storage' }
+    return { status: 200, message: 'Storage cached' }
   }
 </script>
-
 <div class="min-h-full">
   <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
   <div

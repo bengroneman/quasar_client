@@ -1,10 +1,10 @@
 <script>
-  import Combobox from '../Combobox.svelte';
+  import Combobox from '../Combobox.svelte'
 
   let measure = {};
   let isChecked = false;
-  let jc_codes = ['test', 'test2'];
-  let departments = ['test', 'test2'];
+  export let departments;
+  export let jc_codes;
 </script>
 
 <div class="space-y-6">
@@ -29,10 +29,11 @@
                 autocomplete="off"
               />
             </div>
-            <Combobox class="sm:col-span-3" label="Department" options={departments} />
-            <Combobox label="JC Regulation Code" options={jc_codes} />
+            {#if departments.length >= 1 || jc_codes.length >= 1}
+              <Combobox class="sm:col-span-3" label="Department" options={departments} />
+              <Combobox label="JC Regulation Code" options={jc_codes} />
+            {/if}
           </div>
-
           <div class="relative">
             <label for="measure-description" class="form-label z-20"> Description </label>
             <div class="mt-1">
@@ -86,7 +87,6 @@
                 <button
                   type="button"
                   class="{isChecked ? 'check-box bg-dark-orchid': 'check-box bg-gray-200'}"
-                  on:click={isChecked = !isChecked}
                   role="switch"
                   aria-checked="false"
                   aria-labelledby="target greater than goal"
