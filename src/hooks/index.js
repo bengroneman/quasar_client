@@ -26,6 +26,6 @@ export function getSession({ locals }) {
     },
     measure_rows: locals.measure_rows,
     departments: locals.departments,
-    jc_codes: locals.jc_codes,
+    jc_codes: locals.jc_codes
   };
 }

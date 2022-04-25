@@ -76,7 +76,7 @@
                   <span class="block font-bold pb-4 pt-1">Trios Healthcare</span>
                 </h1>
                 <div class="grid grid-cols-6 w-full gap-4">
-                  <Combobox options={department_names} label="Department"/>
+                  <Combobox options={department_names} label="Department" />
                 </div>
               </div>
             </div>
@@ -130,8 +130,7 @@
                               <span class="font-bold word-wrap truncate">
                                 {row.measure_description}
                               </span>
-                              <span class="block text-sm">JC Criteria: {row.regulation_code}</span
-                              >
+                              <span class="block text-sm">JC Criteria: {row.regulation_code}</span>
                             </td>
                             <td class="_table-cell">
                               {row.goal}

@@ -1,5 +1,5 @@
 <script>
-  import Combobox from '../Combobox.svelte'
+  import Combobox from '../Combobox.svelte';
 
   let measure = {};
   let isChecked = false;
@@ -97,7 +97,7 @@
                   <span
                     aria-hidden="true"
                     class="translate-x-0 pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
-                  ></span>
+                  />
                 </button>
               </div>
             </div>
