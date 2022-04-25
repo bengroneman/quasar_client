@@ -2,7 +2,7 @@
   import CheckIcon from '../components/icons/CheckIcon.svelte';
   import SelectorIcon from '../components/icons/SelectorIcon.svelte';
 
-  export let options;
+  export let options = ['All'];
   export let label;
   let selectedOption = '';
   let searching = false;

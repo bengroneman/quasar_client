@@ -1,25 +1,18 @@
-<script>
-  // TODO: Group by departments
+<script context="module">
   import Combobox from '../components/Combobox.svelte';
   import PlusIcon from '../components/icons/PlusIcon.svelte';
 
-  import { get, post } from '../helpers/utils';
+  import { post } from '../helpers/utils';
   import { browser } from '$app/env';
   import _ from 'lodash';
-  let measure_rows;
-  let department_names = [];
+
+  export let measure_rows = [];
+  export let department_names = [];
   let token;
 
   if (browser) {
     token = window.sessionStorage.getItem('token');
   }
-  // TODO: only fetch rows if they aren't in indexDB storage
-  const fetchMeasureRows = (async () => {
-    const response = await get('api/v1/scorecard/overview/?hospital_id=6&year=2022', token);
-    measure_rows = await response;
-    return measure_rows;
-  })();
-
   function addDeptName(name) {
     department_names.push(name);
     return name;
@@ -69,9 +62,9 @@
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
       <div class="shadow overflow-hidden border-b border-gray-100 sm:rounded-lg">
         <div class="flex justify-end mt-4 pt-4 pr-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <button type="button" on:focus={openNewMeasureModal} class="button-primary">
+          <a type="button" href="/scorecard/measures/create" class="button-primary">
             Create Measure
-          </button>
+          </a>
         </div>
         <!-- START Oversight Row -->
         <div>
@@ -79,10 +72,11 @@
             <div class="sm:flex sm:items-center">
               <div class="sm:flex-auto">
                 <h1 class="text-xl font-light text-gray-900">
-                  <span class="block font-bold">Facility: Trios Healthcare</span>
+                  <span class="block">Facility:</span>
+                  <span class="block font-bold pb-4 pt-1">Trios Healthcare</span>
                 </h1>
                 <div class="grid grid-cols-6 w-full gap-4">
-                  <Combobox options={department_names} />
+                  <Combobox options={department_names} label="Department"/>
                 </div>
               </div>
             </div>
@@ -109,93 +103,87 @@
                           <th scope="col" class="table-header">Dec</th>
                           <th scope="col" class="table-header" />
                         </tr>
-                        {#await fetchMeasureRows}
-                          <p>...loading...</p>
-                        {:then rows}
-                          {#each rows as row, index}
-                            {#if !(department_names.indexOf(row.dept_name) > -1)}
-                              <tr class="border-gray-100 bg-gray-50 table-row">
-                                <th
-                                  colspan="1"
-                                  scope="colgroup"
-                                  class="table-header font-display text-orange-soda tracking-wide"
-                                >
-                                  <span class="font-bold text-lg">
-                                    {addDeptName(row.dept_name)}
-                                  </span>
-                                  <div class="input-link-primary flex pt-2">
-                                    <kbd
-                                      class="inline-flex items-center border border-gray-200 rounded px-2 mr-2 text-sm font-sans font-medium text-gray-400"
-                                    >
-                                      <span class="pr-2">Add measure to department</span>
-                                      <PlusIcon />
-                                    </kbd>
-                                  </div>
-                                </th>
-                              </tr>
-                            {/if}
-                            <tr class="table-row">
-                              <td class="_table-cell text-left fixed-table-cell">
-                                <span class="font-bold word-wrap truncate">
-                                  {row.measure_description}
+                        {#each measure_rows as row, index}
+                          {#if !(department_names.indexOf(row.dept_name) > -1)}
+                            <tr class="border-gray-100 bg-gray-50 table-row">
+                              <th
+                                colspan="1"
+                                scope="colgroup"
+                                class="table-header font-display text-orange-soda tracking-wide"
+                              >
+                                <span class="font-bold text-lg">
+                                  {addDeptName(row.dept_name)}
                                 </span>
-                                <span class="block text-sm">JC Criteria: {row.regulation_code}</span
-                                >
-                              </td>
-                              <td class="_table-cell">
-                                {row.goal}
-                                {#if row.good.toLowerCase() === 'up'}
-                                  <span class="text-green-500 font-bold"> +</span>
-                                {:else if row.good.toLowerCase() === 'down'}
-                                  <span class="text-red-500 font-bold"> -</span>
-                                {:else}
-                                  <span />
-                                {/if}
-                              </td>
-                              {#each row.metrics as metric}
-                                {#if measure_rows[index].edit}
-                                  <td class="_table-cell w-fit">
-                                    <input
-                                      type="text"
-                                      name="metric"
-                                      class="focus:ring-indigo-500 text-center w-full focus:border-indigo-500 block sm:text-sm border-gray-100 rounded-md"
-                                      bind:value={metric}
-                                    />
-                                  </td>
-                                {:else}
-                                  <td
-                                    class={colorCodeCell(
-                                      measure_rows[index].goal,
-                                      metric,
-                                      measure_rows[index].good
-                                    )}
+                                <div class="input-link-primary flex pt-2">
+                                  <kbd
+                                    class="inline-flex items-center border border-gray-200 rounded px-2 mr-2 text-sm font-sans font-medium text-gray-400"
                                   >
-                                    <span>{metric}</span>
-                                  </td>
-                                {/if}
-                              {/each}
-                              <td class="_table-cell">
-                                {#if row.edit}
-                                  <input
-                                    on:click={() => saveRow(measure_rows[index], index)}
-                                    class="input-link-primary"
-                                    type="button"
-                                    value="Save"
-                                  />
-                                {:else}
-                                  <input
-                                    on:click={() => editRow(index)}
-                                    class="input-link-primary"
-                                    type="button"
-                                    value="Edit"
-                                  />
-                                {/if}
-                              </td>
+                                    <span class="pr-2">Add measure to department</span>
+                                    <PlusIcon />
+                                  </kbd>
+                                </div>
+                              </th>
                             </tr>
-                          {/each}
-                        {:catch error}
-                          <p>{error}</p>
-                        {/await}
+                          {/if}
+                          <tr class="table-row">
+                            <td class="_table-cell text-left fixed-table-cell">
+                              <span class="font-bold word-wrap truncate">
+                                {row.measure_description}
+                              </span>
+                              <span class="block text-sm">JC Criteria: {row.regulation_code}</span
+                              >
+                            </td>
+                            <td class="_table-cell">
+                              {row.goal}
+                              {#if row.good.toLowerCase() === 'up'}
+                                <span class="text-green-500 font-bold"> +</span>
+                              {:else if row.good.toLowerCase() === 'down'}
+                                <span class="text-red-500 font-bold"> -</span>
+                              {:else}
+                                <span />
+                              {/if}
+                            </td>
+                            {#each row.metrics as metric}
+                              {#if measure_rows[index].edit}
+                                <td class="_table-cell w-fit">
+                                  <input
+                                    type="text"
+                                    name="metric"
+                                    class="focus:ring-indigo-500 text-center w-full focus:border-indigo-500 block sm:text-sm border-gray-100 rounded-md"
+                                    bind:value={metric}
+                                  />
+                                </td>
+                              {:else}
+                                <td
+                                  class={colorCodeCell(
+                                    measure_rows[index].goal,
+                                    metric,
+                                    measure_rows[index].good
+                                  )}
+                                >
+                                  <span>{metric}</span>
+                                </td>
+                              {/if}
+                            {/each}
+                            <td class="_table-cell">
+                              {#if row.edit}
+                                <input
+                                  on:click={() => saveRow(measure_rows[index], index)}
+                                  class="input-link-primary"
+                                  type="button"
+                                  value="Save"
+                                />
+                              {:else}
+                                <input
+                                  on:click={() => editRow(index)}
+                                  class="input-link-primary"
+                                  type="button"
+                                  value="Edit"
+                                />
+                              {/if}
+                            </td>
+                          </tr>
+                        {/each}
                       </tbody>
                     </table>
                   </div>

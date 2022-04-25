@@ -1,23 +1,33 @@
 <script context="module">
-  import { get } from '../../helpers/utils';
-  import Sidebar from '../../components/Sidebar.svelte';
-  import { measure_rows } from '../../stores/scorecardStore.js';
+  import { get } from '../../helpers/utils'
+  import { browser } from '$app/env'
+  import Sidebar from '../../components/Sidebar.svelte'
+  import _ from 'lodash'
 
-  let local_measure_rows;
   /** @type {import('./[slug]').Load} */
   export async function load({ params, fetch, session, stuff }) {
-    if (measure_rows.length < 1) {
-      const response = await get('api/v1/scorecard/overview/?hospital_id=6&year=2022');
-      measure_rows.set(await response.json());
+    if (browser) {
+      if (window.sessionStorage.getItem('measure_rows') === null) {
+        const response = await get('api/v1/scorecard/overview?hospital_id=6&year=2022');
+
+        let department_values = response.map(val => val.dept_name)
+        let departments = _.uniq(department_values)
+
+        let jc_code_values = response.map(val =>  {
+          if (val.regulation_code !== 'null') { return val.regulation_code }
+        })
+        let jc_codes = _.uniq(jc_code_values)
+
+        window.sessionStorage.setItem('departments', JSON.stringify(departments))
+        window.sessionStorage.setItem('jc_codes', JSON.stringify(jc_codes))
+        window.sessionStorage.setItem('measure_rows', JSON.stringify(response))
+
+        return { status: 200 }
+      }
     }
-    measure_rows.subscribe((rows) => {
-      local_measure_rows = rows;
-    });
-    console.log(local_measure_rows);
-    return { status: 200, props: local_measure_rows };
+    return { status: 200, message: 'Storage cached' }
   }
 </script>
-
 <div class="min-h-full">
   <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
   <div
