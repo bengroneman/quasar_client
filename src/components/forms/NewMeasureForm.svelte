@@ -5,6 +5,9 @@
   let isChecked = false;
   export let departments;
   export let jc_codes;
+  function toggleSwitch() {
+    isChecked = !isChecked;
+  }
 </script>
 
 <div class="space-y-6">
@@ -29,10 +32,8 @@
                 autocomplete="off"
               />
             </div>
-            {#if departments.length >= 1 || jc_codes.length >= 1}
-              <Combobox class="sm:col-span-3" label="Department" options={departments} />
-              <Combobox label="JC Regulation Code" options={jc_codes} />
-            {/if}
+            <Combobox class="sm:col-span-3" label="Department" options={departments} />
+            <Combobox label="JC Regulation Code" options={jc_codes} />
           </div>
           <div class="relative">
             <label for="measure-description" class="form-label z-20"> Description </label>
@@ -87,7 +88,7 @@
                 <button
                   type="button"
                   class={isChecked ? 'check-box bg-dark-orchid' : 'check-box bg-gray-200'}
-                  on:click={(isChecked = !isChecked)}
+                  on:click={toggleSwitch}
                   role="switch"
                   aria-checked="false"
                   aria-labelledby="target greater than goal"
@@ -96,7 +97,7 @@
                   <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
                   <span
                     aria-hidden="true"
-                    class="translate-x-0 pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
+                    class={isChecked ? 'check-circle translate-x-5' : 'check-circle translate-x-0'}
                   />
                 </button>
               </div>

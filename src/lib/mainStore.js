@@ -1,11 +1,41 @@
 import { browser } from '$app/env';
 import { writable } from 'svelte/store';
 
-const init_departments = browser ? window.sessionStorage.getItem('departments').split(',') : [];
+function getInitDepartments() {
+  if (browser) {
+    try {
+      return window.sessionStorage.getItem('departments').split(',');
+    } catch (e) {
+      return [];
+    }
+  }
+  return [];
+}
+const init_departments = getInitDepartments();
 
-const init_jc_codes = browser ? window.sessionStorage.getItem('jc_codes').split(',') : [];
+function getInitJCCodes() {
+  if (browser) {
+    try {
+      return window.sessionStorage.getItem('jc_codes').split(',');
+    } catch (e) {
+      return [];
+    }
+  }
+  return [];
+}
+const init_jc_codes = getInitJCCodes();
 
-const init_measure_rows = browser ? JSON.parse(window.sessionStorage.getItem('measure_rows')) : [];
+function getInitMeasureRows() {
+  if (browser) {
+    try {
+      return JSON.parse(window.sessionStorage.getItem('measure_rows'));
+    } catch (e) {
+      return [];
+    }
+  }
+  return [];
+}
+const init_measure_rows = getInitMeasureRows();
 
 export const departments = writable(init_departments);
 departments.subscribe((dept) => {
