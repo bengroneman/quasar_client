@@ -6,8 +6,8 @@
 
 <style>
   @font-face {
-      font-family: 'Fira Code';
-      src: url('../assets/fonts/FiraCode-Regular.ttf') format('truetype');
+    font-family: 'Fira Code';
+    src: url('../assets/fonts/FiraCode-Regular.ttf') format('truetype');
   }
   @font-face {
     font-family: 'Jost';

@@ -42,7 +42,7 @@
                 rows="3"
                 class="shadow-sm form-field focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
                 placeholder="Describe the measure in detail"
-              ></textarea>
+              />
             </div>
           </div>
           <div class="grid grid-cols-6 gap-6">
@@ -56,7 +56,7 @@
                   bind:value={measure.metric_type}
                   class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
                   placeholder="25"
-                >
+                />
                 <div class="absolute inset-y-0 right-0 flex items-center">
                   <label for="measure-value-type" class="sr-only">Metric value type</label>
                   <select
@@ -85,8 +85,8 @@
                 <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
                 <button
                   type="button"
-                  class="{isChecked ? 'check-box bg-dark-orchid': 'check-box bg-gray-200'}"
-                  on:click={isChecked = !isChecked}
+                  class={isChecked ? 'check-box bg-dark-orchid' : 'check-box bg-gray-200'}
+                  on:click={(isChecked = !isChecked)}
                   role="switch"
                   aria-checked="false"
                   aria-labelledby="target greater than goal"
@@ -95,9 +95,8 @@
                   <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
                   <span
                     aria-hidden="true"
-
                     class="translate-x-0 pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
-                  ></span>
+                  />
                 </button>
               </div>
             </div>
@@ -110,10 +109,12 @@
     <button
       type="button"
       class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >Cancel</button>
+      >Cancel</button
+    >
     <button
       type="submit"
       class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >Save</button>
+      >Save</button
+    >
   </div>
 </div>
