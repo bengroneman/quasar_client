@@ -49,14 +49,14 @@
           </div>
           <div class="grid grid-cols-6 gap-6">
             <div class="col-span-3">
-              <div class="form-field">
+              <div class="relative">
                 <label for="measure-metric-type" class="form-label">Metric Type</label>
                 <input
                   type="text"
                   name="measure-metric-type"
                   id="measure-metric-type"
                   bind:value={measure.metric_type}
-                  class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                  class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm rounded-md"
                   placeholder="25"
                 />
                 <div class="absolute inset-y-0 right-0 flex items-center">
