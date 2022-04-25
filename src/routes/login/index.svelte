@@ -1,6 +1,8 @@
 <script>
   import { goto } from '$app/navigation';
   import { post, get } from '../../helpers/utils';
+  import NotificationPanel from '../../components/NotificationPanel.svelte';
+
   import { browser } from '$app/env';
   import { serialize } from 'cookie';
 
@@ -9,30 +11,34 @@
   let errors;
 
   async function submit(event) {
-    // TOOD: abstract this into store logic
-    const response = await post(`api/v1/auth/login?username=${email}&password=${password}`);
-    // TODO handle network errors
-    errors = response.errors;
-    const token = response.access_token;
+    try {
+      // TODO: abstract this into store logic
+      const response = await post(`api/v1/auth/login?username=${email}&password=${password}`);
+      const token = response.access_token;
 
-    const userData = await get(`api/v1/auth/me`, token);
-    userData['token'] = token;
-    userData['logged_in'] = true;
-    if (browser && token) {
-      for (const [k, v] of Object.entries(userData)) {
-        window.sessionStorage.setItem(k, v);
+      const userData = await get(`api/v1/auth/me`, token);
+      userData['token'] = token;
+      userData['logged_in'] = true;
+      if (browser && token) {
+        for (const [k, v] of Object.entries(userData)) {
+          window.sessionStorage.setItem(k, v);
+        }
+        document.cookie = serialize('token', token);
       }
-      document.cookie = serialize('token', token);
+      goto('/scorecard/dashboard');
+    } catch (e) {
+      errors = e;
     }
-    goto('/scorecard/dashboard');
   }
 </script>
 
 <svelte:head>
   <title>Sign in • Quality Toolkit</title>
 </svelte:head>
-<!-- TODO: only during dev -->
-<form method="POST" action="/login" class="divide-y mx-auto max-w-xs divide-gray-200">
+{#if errors}
+  <NotificationPanel {errors} />
+{/if}
+<form method="POST" class="divide-y mx-auto max-w-xs divide-gray-200">
   <div class="space-y-8">
     <div class="mx-auto">
       <div class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-4">
