@@ -1,6 +1,8 @@
 <script context="module">
-  import Combobox from '../components/Combobox.svelte';
-  import PlusIcon from '../components/icons/PlusIcon.svelte';
+  import Combobox from './Combobox.svelte';
+  import PlusIcon from './icons/PlusIcon.svelte';
+  import NewMeasureForm from "./forms/NewMeasureForm.svelte";
+  import Modal from "./Modal.svelte";
 
   import { post } from '../helpers/utils';
   import { browser } from '$app/env';
@@ -8,6 +10,7 @@
 
   export let measure_rows = [];
   export let department_names = [];
+  let modalOpen = false;
   let token;
 
   if (browser) {
@@ -52,19 +55,24 @@
       });
   }
 
-  function openNewMeasureModal() {
-    console.log('open modal');
+  function modalOn() {
+    modalOpen = true;
   }
 </script>
+{#if modalOpen}
+  <Modal>
+    <NewMeasureForm />
+  </Modal>
+{/if}
 
 <div class="flex flex-col z-0 w-full">
   <div class="-mx-4">
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
       <div class="shadow overflow-hidden border-b border-gray-100 sm:rounded-lg">
         <div class="flex justify-end mt-4 pt-4 pr-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <a type="button" href="/scorecard/measures/create" class="button-primary">
+          <button on:click={modalOn} type="button" href="/scorecard/measures/create" class="button-primary">
             Create Measure
-          </a>
+          </button>
         </div>
         <!-- START Oversight Row -->
         <div>
