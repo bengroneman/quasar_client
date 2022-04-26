@@ -10,22 +10,16 @@
   import NewMeasureForm from './forms/NewMeasureForm.svelte';
   import Modal from './Modal.svelte';
 
-  let selected_department = '';
-
   let modalOpen = false;
-  let token;
+  let local_departments = [];
+
+  function addRowToDept (n) {
+    local_departments.push(n);
+    return n
+  }
 
   $: local_measure_rows = $measure_rows;
-  $: local_departments = $departments;
   $: local_years = $years;
-
-  if (browser) {
-    token = window.sessionStorage.getItem('token');
-  }
-  function addDeptName(name) {
-    local_departments.push(name);
-    return name;
-  }
 
   function editRow(rowIndex) {
     local_measure_rows[rowIndex].edit = true;
@@ -94,8 +88,7 @@
                   <span class="block font-bold pb-4 pt-1">Trios Healthcare</span>
                 </h1>
                 <div class="grid grid-cols-6 w-full gap-4">
-                  <Combobox options={local_departments} label="Department" />
-                  <Combobox options={local_years} label="Year" />
+                  <Combobox options={$departments} label="Department" />
                 </div>
               </div>
             </div>
@@ -123,7 +116,7 @@
                           <th scope="col" class="table-header" />
                         </tr>
                         {#each local_measure_rows as row, index}
-                          {#if !(local_departments.indexOf(row.dept_name) > -1)}
+                          {#if local_departments.indexOf(row.dept_name) < 0}
                             <tr class="border-gray-100 bg-gray-50 table-row">
                               <th
                                 colspan="1"
@@ -131,7 +124,7 @@
                                 class="table-header font-display text-orange-soda tracking-wide"
                               >
                                 <span class="font-bold text-lg">
-                                  {addDeptName(row.dept_name)}
+                                  {addRowToDept(row.dept_name)}
                                 </span>
                                 <div class="input-link-primary flex pt-2">
                                   <kbd

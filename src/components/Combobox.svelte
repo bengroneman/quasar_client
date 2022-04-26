@@ -7,16 +7,20 @@
   let selectedOption = '';
   let searching = false;
 
-  const startSearching = () => (searching = true);
-  const stopSearching = () => (searching = false);
-  function selectOption(option) {
-    selectedOption = option;
+  const startSearching = () => searching = true;
+  const stopSearching = () => searching = false;
+
+  function selectOption(event) {
+    selectedOption = event.target.innerText;
+    setTimeout(() => {
+      searching = false
+    }, 500)
   }
 
   // Search
   $: filteredOptions = options.filter((option) => {
-    const lower_option = option.toLowerCase();
-    return lower_option.includes(selectedOption.toLowerCase());
+      const lower_option = option.toLowerCase();
+      return lower_option.includes(selectedOption.toLowerCase());
   });
 </script>
 
@@ -25,8 +29,9 @@
   <input
     id="combobox"
     bind:value={selectedOption}
-    on:focusin={startSearching}
-    on:focusout={stopSearching}
+    on:keydown={startSearching}
+    on:keyup={stopSearching}
+    on:click={startSearching}
     type="text"
     class="combobox"
     role="combobox"
@@ -35,7 +40,7 @@
   />
   <button
     type="button"
-    on:click|preventDefault={startSearching}
+    on:click={startSearching}
     class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none"
   >
     <SelectorIcon />
@@ -46,7 +51,7 @@
     >
       {#each filteredOptions as option, index}
         <li
-          on:click={selectOption(option)}
+          on:click|capture={selectOption}
           class="relative cursor-default select-none py-2 pl-8 pr-4 text-gray-600 hover:bg-gray-200 hover:text-gray-800"
           id={'option-' + index}
           role="option"

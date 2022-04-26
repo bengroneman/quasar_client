@@ -2,7 +2,6 @@
   import { goto } from '$app/navigation';
   import { post, get } from '../../helpers/utils';
   import NotificationPanel from '../../components/NotificationPanel.svelte';
-  import { session } from '$app/stores';
 
   import { browser } from '$app/env';
   import { serialize } from 'cookie';
@@ -27,8 +26,6 @@
       const userData = await get(`api/v1/auth/user?email=${email}`);
       userData['logged_in'] = true;
       delete userData['password']
-      session.user = userData
-      console.log(session.user)
       goto('/scorecard/dashboard');
     }
   }
