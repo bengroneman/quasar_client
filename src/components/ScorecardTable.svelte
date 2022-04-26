@@ -1,28 +1,31 @@
-<script context="module">
+<script>
   import Combobox from './Combobox.svelte';
   import PlusIcon from './icons/PlusIcon.svelte';
   import NewMeasureForm from './forms/NewMeasureForm.svelte';
   import Modal from './Modal.svelte';
-
-  import { post } from '../helpers/utils';
   import { browser } from '$app/env';
   import _ from 'lodash';
+  import { post } from '../helpers/utils';
 
   export let measure_rows = [];
   export let department_names = [];
+
   let modalOpen = false;
   let token;
+
+  $: local_measure_rows = measure_rows;
+  $: local_department_names = department_names;
 
   if (browser) {
     token = window.sessionStorage.getItem('token');
   }
   function addDeptName(name) {
-    department_names.push(name);
+    local_department_names.push(name);
     return name;
   }
 
   function editRow(rowIndex) {
-    measure_rows[rowIndex].edit = true;
+    local_measure_rows[rowIndex].edit = true;
   }
 
   function colorCodeCell(goal, value, up) {
@@ -47,10 +50,10 @@
 
     post('api/v1/scorecard/measure', flat_row, token)
       .then(() => {
-        measure_rows[rowIndex].edit = false;
+        local_measure_rows[rowIndex].edit = false;
       })
       .catch((err) => {
-        measure_rows[rowIndex].edit = false;
+        local_measure_rows[rowIndex].edit = false;
         console.error(err);
       });
   }
@@ -71,14 +74,9 @@
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
       <div class="shadow overflow-hidden border-b border-gray-100 sm:rounded-lg">
         <div class="flex justify-end mt-4 pt-4 pr-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <button
-            on:click={modalOn}
-            type="button"
-            href="/scorecard/measures/create"
-            class="button-primary"
-          >
+          <a href="/scorecard/measures/create" type="button" class="button-primary">
             Create Measure
-          </button>
+          </a>
         </div>
         <!-- START Oversight Row -->
         <div>
@@ -90,7 +88,7 @@
                   <span class="block font-bold pb-4 pt-1">Trios Healthcare</span>
                 </h1>
                 <div class="grid grid-cols-6 w-full gap-4">
-                  <Combobox options={department_names} label="Department" />
+                  <Combobox options={local_department_names} label="Department" />
                 </div>
               </div>
             </div>
@@ -117,8 +115,8 @@
                           <th scope="col" class="table-header">Dec</th>
                           <th scope="col" class="table-header" />
                         </tr>
-                        {#each measure_rows as row, index}
-                          {#if !(department_names.indexOf(row.dept_name) > -1)}
+                        {#each local_measure_rows as row, index}
+                          {#if !(local_department_names.indexOf(row.dept_name) > -1)}
                             <tr class="border-gray-100 bg-gray-50 table-row">
                               <th
                                 colspan="1"
@@ -157,7 +155,7 @@
                               {/if}
                             </td>
                             {#each row.metrics as metric}
-                              {#if measure_rows[index].edit}
+                              {#if local_measure_rows[index].edit}
                                 <td class="_table-cell w-fit">
                                   <input
                                     type="text"
@@ -169,9 +167,9 @@
                               {:else}
                                 <td
                                   class={colorCodeCell(
-                                    measure_rows[index].goal,
+                                    local_measure_rows[index].goal,
                                     metric,
-                                    measure_rows[index].good
+                                    local_measure_rows[index].good
                                   )}
                                 >
                                   <span>{metric}</span>
@@ -181,7 +179,7 @@
                             <td class="_table-cell">
                               {#if row.edit}
                                 <input
-                                  on:click={() => saveRow(measure_rows[index], index)}
+                                  on:click={() => saveRow(local_measure_rows[index], index)}
                                   class="input-link-primary"
                                   type="button"
                                   value="Save"

@@ -7,7 +7,7 @@
   /** @type {import('./[slug]').Load} */
   export async function load() {
     if (browser) {
-      if (window.sessionStorage.getItem('measure_rows') === null) {
+      if (!window.sessionStorage.getItem('measure_rows')) {
         try {
           const response = await get('api/v1/scorecard/overview?hospital_id=6&year=2022');
           let department_values = response.map((val) => val.dept_name);
