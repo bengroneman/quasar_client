@@ -76,12 +76,15 @@
             </div>
             <div class="col-span-3">
               <div class="flex items-center justify-between">
-                <span class="flex-grow flex flex-col">
-                  <span class="text-sm font-medium text-gray-900" id="availability-label">
+                <span class="flex-grow text-sm flex flex-col">
+                  <span class="font-medium text-gray-900" id="availability-label">
                     Should the target be greater than the goal?
                   </span>
-                  <span class="text-sm text-gray-500" id="availability-description">
-                    Describe this
+                  <span class="pt-4 text-gray-500">
+                    target > goal =
+                    <span class="{isChecked ? 'text-danger-red font-bold' : 'text-safe-green font-bold'}">
+                      {isChecked ? 'bad' : 'good'}
+                    </span>
                   </span>
                 </span>
                 <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->

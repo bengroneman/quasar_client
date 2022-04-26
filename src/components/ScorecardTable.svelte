@@ -19,7 +19,7 @@
     return n
   }
 
-  $: local_measure_rows = $measure_rows.filter((row) => row.dept_name === selectedDepartment);
+  $: local_measure_rows = $measure_rows.filter(row => row.dept_name.indexOf(selectedDepartment) !== -1);
   $: local_years = $years;
 
   function editRow(rowIndex) {

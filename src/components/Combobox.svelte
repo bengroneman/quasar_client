@@ -12,17 +12,13 @@
 
   function selectOption(event) {
     selectedOption = event.target.innerText;
-    console.log(selectedOption)
     setTimeout(() => {
       searching = false
     }, 500)
   }
 
   // Search
-  $: filteredOptions = options.filter((option) => {
-      const lower_option = option.toLowerCase();
-      return lower_option.includes(selectedOption.toLowerCase());
-  });
+  $: filteredOptions = options.filter(option => Array(option).indexOf(selectedOption));
 </script>
 
 <div class="relative">
@@ -52,7 +48,7 @@
     >
       {#each filteredOptions as option, index}
         <li
-          on:click|capture={selectOption}
+          on:click={selectOption}
           class="relative cursor-default select-none py-2 pl-8 pr-4 text-gray-600 hover:bg-gray-200 hover:text-gray-800"
           id={'option-' + index}
           role="option"
