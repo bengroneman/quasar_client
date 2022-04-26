@@ -27,6 +27,7 @@
       }
       goto('/scorecard/dashboard');
     } catch (e) {
+      console.log(e);
       errors = e;
     }
   }
@@ -36,7 +37,7 @@
   <title>Sign in • Quality Toolkit</title>
 </svelte:head>
 {#if errors}
-  <NotificationPanel {errors} />
+  <NotificationPanel message={errors} />
 {/if}
 <form method="POST" class="divide-y mx-auto max-w-xs divide-gray-200">
   <div class="space-y-8">

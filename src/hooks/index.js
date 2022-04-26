@@ -23,9 +23,6 @@ export function getSession({ locals }) {
       permission_quality: locals.user.permission_quality,
       permission_trainer: locals.user.permission_trainer,
       permission_viewer: locals.user.permission_viewer
-    },
-    measure_rows: locals.measure_rows,
-    departments: locals.departments,
-    jc_codes: locals.jc_codes
+    }
   };
 }

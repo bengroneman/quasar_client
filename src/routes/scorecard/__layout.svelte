@@ -1,28 +1,33 @@
 <script context="module">
+  // SRC: https://kit.svelte.dev/docs/page-options#prerender
   import { get } from '../../helpers/utils';
   import { browser } from '$app/env';
   import Sidebar from '../../components/Sidebar.svelte';
+  import { departments, jc_codes, measure_rows, years } from '../../lib/mainStore';
   import _ from 'lodash';
 
   /** @type {import('./[slug]').Load} */
   export async function load() {
     if (browser) {
-      if (!window.sessionStorage.getItem('measure_rows')) {
+      if (measure_rows) {
         try {
           const response = await get('api/v1/scorecard/overview?hospital_id=6&year=2022');
-          let department_values = response.map((val) => val.dept_name);
-          let departments = _.uniq(department_values);
+          let { department_values, year_values } = response.map((val) => [val.dept_name, val.year]);
+          let _departments = _.uniq(department_values);
+          let _years = _.uniq(year_values);
 
           let jc_code_values = response.map((val) => {
             if (val.regulation_code !== 'null') {
               return val.regulation_code;
             }
           });
-          let jc_codes = _.uniq(jc_code_values);
 
-          window.sessionStorage.setItem('departments', departments);
-          window.sessionStorage.setItem('jc_codes', jc_codes);
-          window.sessionStorage.setItem('measure_rows', JSON.stringify(response));
+          let _jc_codes = _.uniq(jc_code_values);
+
+          departments.set(_departments);
+          years.set(_years);
+          jc_codes.set(_jc_codes);
+          measure_rows.set(response);
 
           return { status: 200 };
         } catch (e) {

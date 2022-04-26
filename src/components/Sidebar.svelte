@@ -2,7 +2,6 @@
   // Utils
   import { goto } from '$app/navigation';
   import { browser } from '$app/env';
-  import userStore from '../helpers/userStore.js';
 
   // Components
   import HomeIcon from './icons/HomeIcon.svelte';
@@ -38,9 +37,6 @@
   $: filteredNavItems = navItems.filter((item) => {
     let lower_title = item.title.toLowerCase();
     return 0 === lower_title.indexOf(searchTerm.toLowerCase());
-  });
-  userStore.subscribe((u) => {
-    user = u;
   });
 
   function logoutUser() {

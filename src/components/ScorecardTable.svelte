@@ -1,26 +1,29 @@
 <script>
+  // TODO: fix bug - on sessionstorage update via refresh you have to refresh again for the rows to show back up
+  import { post } from '../helpers/utils';
+  import { browser } from '$app/env';
+  import _ from 'lodash';
+  import { departments, years, measure_rows } from '../lib/mainStore';
+
   import Combobox from './Combobox.svelte';
   import PlusIcon from './icons/PlusIcon.svelte';
   import NewMeasureForm from './forms/NewMeasureForm.svelte';
   import Modal from './Modal.svelte';
-  import { browser } from '$app/env';
-  import _ from 'lodash';
-  import { post } from '../helpers/utils';
 
-  export let measure_rows = [];
-  export let department_names = [];
+  let selected_department = '';
 
   let modalOpen = false;
   let token;
 
-  $: local_measure_rows = measure_rows;
-  $: local_department_names = department_names;
+  $: local_measure_rows = $measure_rows;
+  $: local_departments = $departments;
+  $: local_years = $years;
 
   if (browser) {
     token = window.sessionStorage.getItem('token');
   }
   function addDeptName(name) {
-    local_department_names.push(name);
+    local_departments.push(name);
     return name;
   }
 
@@ -51,6 +54,9 @@
     post('api/v1/scorecard/measure', flat_row, token)
       .then(() => {
         local_measure_rows[rowIndex].edit = false;
+        if (browser) {
+          window.sessionStorage.clear();
+        }
       })
       .catch((err) => {
         local_measure_rows[rowIndex].edit = false;
@@ -88,7 +94,8 @@
                   <span class="block font-bold pb-4 pt-1">Trios Healthcare</span>
                 </h1>
                 <div class="grid grid-cols-6 w-full gap-4">
-                  <Combobox options={local_department_names} label="Department" />
+                  <Combobox options={local_departments} label="Department" />
+                  <Combobox options={local_years} label="Year" />
                 </div>
               </div>
             </div>
@@ -116,7 +123,7 @@
                           <th scope="col" class="table-header" />
                         </tr>
                         {#each local_measure_rows as row, index}
-                          {#if !(local_department_names.indexOf(row.dept_name) > -1)}
+                          {#if !(local_departments.indexOf(row.dept_name) > -1)}
                             <tr class="border-gray-100 bg-gray-50 table-row">
                               <th
                                 colspan="1"
