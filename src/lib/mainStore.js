@@ -1,5 +1,6 @@
 import { browser } from '$app/env';
 import { writable } from 'svelte/store';
+import _ from 'lodash';
 
 function getInitDepartments() {
   if (browser) {

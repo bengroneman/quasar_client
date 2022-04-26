@@ -20,8 +20,8 @@
           });
           let jc_codes = _.uniq(jc_code_values);
 
-          window.sessionStorage.setItem('departments', JSON.stringify(departments));
-          window.sessionStorage.setItem('jc_codes', JSON.stringify(jc_codes));
+          window.sessionStorage.setItem('departments', departments);
+          window.sessionStorage.setItem('jc_codes', jc_codes);
           window.sessionStorage.setItem('measure_rows', JSON.stringify(response));
 
           return { status: 200 };

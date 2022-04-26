@@ -4,6 +4,7 @@
     modalOpen = false;
   }
 </script>
+
 <div
   class="fixed z-10 inset-0 overflow-y-auto"
   aria-labelledby="modal-title"
@@ -45,7 +46,7 @@
     >
       <div>
         <div class="content">
-         <slot />
+          <slot />
         </div>
       </div>
     </div>

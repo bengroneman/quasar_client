@@ -1,8 +1,8 @@
 <script context="module">
   import Combobox from './Combobox.svelte';
   import PlusIcon from './icons/PlusIcon.svelte';
-  import NewMeasureForm from "./forms/NewMeasureForm.svelte";
-  import Modal from "./Modal.svelte";
+  import NewMeasureForm from './forms/NewMeasureForm.svelte';
+  import Modal from './Modal.svelte';
 
   import { post } from '../helpers/utils';
   import { browser } from '$app/env';
@@ -59,6 +59,7 @@
     modalOpen = true;
   }
 </script>
+
 {#if modalOpen}
   <Modal>
     <NewMeasureForm />
@@ -70,7 +71,12 @@
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
       <div class="shadow overflow-hidden border-b border-gray-100 sm:rounded-lg">
         <div class="flex justify-end mt-4 pt-4 pr-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <button on:click={modalOn} type="button" href="/scorecard/measures/create" class="button-primary">
+          <button
+            on:click={modalOn}
+            type="button"
+            href="/scorecard/measures/create"
+            class="button-primary"
+          >
             Create Measure
           </button>
         </div>
