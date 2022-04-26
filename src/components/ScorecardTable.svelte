@@ -12,13 +12,14 @@
 
   let modalOpen = false;
   let local_departments = [];
+  let selectedDepartment = '';
 
   function addRowToDept (n) {
     local_departments.push(n);
     return n
   }
 
-  $: local_measure_rows = $measure_rows;
+  $: local_measure_rows = $measure_rows.filter((row) => row.dept_name === selectedDepartment);
   $: local_years = $years;
 
   function editRow(rowIndex) {
@@ -88,7 +89,7 @@
                   <span class="block font-bold pb-4 pt-1">Trios Healthcare</span>
                 </h1>
                 <div class="grid grid-cols-6 w-full gap-4">
-                  <Combobox options={$departments} label="Department" />
+                  <Combobox options={$departments} label="Department" bind:selectedOption={selectedDepartment} />
                 </div>
               </div>
             </div>

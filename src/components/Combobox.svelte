@@ -4,7 +4,7 @@
 
   export let options = ['All'];
   export let label;
-  let selectedOption = '';
+  export let selectedOption = '';
   let searching = false;
 
   const startSearching = () => searching = true;
@@ -12,6 +12,7 @@
 
   function selectOption(event) {
     selectedOption = event.target.innerText;
+    console.log(selectedOption)
     setTimeout(() => {
       searching = false
     }, 500)
