@@ -2,6 +2,7 @@
   import { goto } from '$app/navigation';
   import { post, get } from '../../helpers/utils';
   import NotificationPanel from '../../components/NotificationPanel.svelte';
+  import { session } from '$app/stores';
 
   import { browser } from '$app/env';
   import { serialize } from 'cookie';
@@ -10,25 +11,25 @@
   let password = '';
   let errors;
 
-  async function submit(event) {
+  async function submit() {
+    let token;
+
     try {
       // TODO: abstract this into store logic
-      const response = await post(`api/v1/auth/login?username=${email}&password=${password}`);
-      const token = response.access_token;
-
-      const userData = await get(`api/v1/auth/me`, token);
-      userData['token'] = token;
-      userData['logged_in'] = true;
-      if (browser && token) {
-        for (const [k, v] of Object.entries(userData)) {
-          window.sessionStorage.setItem(k, v);
-        }
-        document.cookie = serialize('token', token);
-      }
-      goto('/scorecard/dashboard');
+      let response = await post(`api/v1/auth/login?username=${email}&password=${password}`);
+      token = response.access_token;
     } catch (e) {
       console.log(e);
       errors = e;
+    }
+    if (browser && token) {
+      document.cookie = serialize('token', token);
+      const userData = await get(`api/v1/auth/user?email=${email}`);
+      userData['logged_in'] = true;
+      delete userData['password']
+      session.user = userData
+      console.log(session.user)
+      goto('/scorecard/dashboard');
     }
   }
 </script>

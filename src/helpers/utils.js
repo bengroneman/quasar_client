@@ -9,7 +9,10 @@ export function post(endpoint, data, auth_token) {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${auth_token}`
     }
-  }).then((r) => r.json());
+  }).then((r) => {
+    return r.json()
+  }).catch(err => console.error(err))
+
 }
 
 export function get(endpoint, auth_token) {
@@ -17,8 +20,10 @@ export function get(endpoint, auth_token) {
     method: 'GET',
     credentials: 'include',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${auth_token}`
     }
-  }).then((r) => r.json());
+  }).then((r) => {
+    return r.json()
+  }).catch(err => console.error(err));
 }

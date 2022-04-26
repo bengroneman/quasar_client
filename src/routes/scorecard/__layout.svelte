@@ -7,7 +7,7 @@
   import _ from 'lodash';
 
   /** @type {import('./[slug]').Load} */
-  export async function load() {
+  export async function load({session}) {
     if (browser) {
       if (measure_rows) {
         try {

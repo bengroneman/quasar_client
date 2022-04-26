@@ -1,15 +1,16 @@
 <script context="module">
   import { browser } from '$app/env';
+  import { goto } from '$app/navigation';
 
   export async function load({ session }) {
     if (!session.user) {
       if (browser) {
-        window.location.pathname = '/login';
+        goto('/login');
       }
       return { status: 200, message: 'Should login' };
     }
     if (browser) {
-      window.location.pathname = '/login';
+      goto('/scorecard/dashboard');
     }
     return { status: 200, message: 'Logged in' };
   }
