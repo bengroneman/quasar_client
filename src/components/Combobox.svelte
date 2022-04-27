@@ -8,7 +8,16 @@
   let searching = false;
 
   const startSearching = () => (searching = true);
-  const stopSearching = () => (searching = false);
+  const stopSearching = (event) => {
+    console.log(event.srcElement.id.startsWith('combobox'))
+    searching = false;
+  }
+
+  function handleBodyClick(event) {
+    if (!event.srcElement.id.startsWith('combobox')) {
+      searching = false;
+    }
+  }
 
   function selectOption(event) {
     selectedOption = event.target.innerText;
@@ -20,6 +29,7 @@
   // Search
   $: filteredOptions = options.filter((option) => Array(option).indexOf(selectedOption));
 </script>
+<svelte:body on:click|stopPropagation={handleBodyClick} />
 
 <div class="relative">
   <label for="combobox" class="form-label">{label}</label>
