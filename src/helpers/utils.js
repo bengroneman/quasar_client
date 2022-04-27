@@ -1,5 +1,5 @@
 // const API_URL = process.env.MODE === "DEV" ? 'http://localhost:8000/' : 'http://ec2-3-141-37-250.us-east-2.compute.amazonaws.com:4081/';
-export const API_URL = 'http://localhost:8000/'
+export const API_URL = 'http://localhost:8000/';
 // export const API_URL = 'http://ec2-3-141-37-250.us-east-2.compute.amazonaws.com:4081/'
 export function post(endpoint, data, auth_token) {
   return fetch(`${API_URL}${endpoint}`, {

@@ -2,7 +2,7 @@
   // SRC: https://kit.svelte.dev/docs/page-options#prerender
   import Sidebar from '../../components/Sidebar.svelte';
   import { get } from '../../helpers/utils';
-  import { departments, years, jc_codes, measure_rows } from "../../lib/mainStore";
+  import { departments, years, jc_codes, measure_rows } from '../../lib/mainStore';
   import _ from 'lodash';
 
   /** @type {import('./[slug]').Load} */
@@ -34,7 +34,6 @@
 </script>
 
 <script>
-
 </script>
 
 <div class="min-h-full">

@@ -2,6 +2,7 @@
   export let width = 6;
   export let height = 6;
 </script>
+
 <!-- Heroicon name: solid/x -->
 <svg
   xmlns="http://www.w3.org/2000/svg"

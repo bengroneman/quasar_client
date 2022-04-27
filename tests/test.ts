@@ -12,23 +12,22 @@ test('test login page loads as 200', async ({ page }) => {
 
 test('login failure notifies end user', async ({ page }) => {
   await page.goto('/login');
-  const email = 'fakeuser@gmail.com'
-  const password = 'fakepassword'
-  await page.fill('#email', email)
-  await page.fill('#password', password)
-  await page.click('button#submit')
+  const email = 'fakeuser@gmail.com';
+  const password = 'fakepassword';
+  await page.fill('#email', email);
+  await page.fill('#password', password);
+  await page.click('button#submit');
 
-  expect(page.url()).toBe('/login')
+  expect(page.url()).toBe('/login');
 });
 
 test('successful login', async ({ page }) => {
   await page.goto('/login');
-  const email = 'create@bluedojo.dev'
-  const password = ''
-  await page.fill('#email', email)
-  await page.fill('#password', password)
-  await page.click('button#submit')
+  const email = 'create@bluedojo.dev';
+  const password = '';
+  await page.fill('#email', email);
+  await page.fill('#password', password);
+  await page.click('button#submit');
   // # TODO check for cookie
-  expect(page.url()).toBe('/scorecard/dashboard')
+  expect(page.url()).toBe('/scorecard/dashboard');
 });
-
