@@ -1,7 +1,11 @@
+<script>
+  export let width = 6;
+  export let height = 6;
+</script>
 <!-- Heroicon name: solid/search -->
 <svg
-  class="mr-3 h-4 w-4 text-gray-400"
   xmlns="http://www.w3.org/2000/svg"
+  class="standard-svg h-{height} h-{width}"
   viewBox="0 0 20 20"
   fill="currentColor"
   aria-hidden="true"

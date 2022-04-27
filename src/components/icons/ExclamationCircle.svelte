@@ -1,7 +1,11 @@
+<script>
+  export let width = 6;
+  export let height = 6;
+</script>
 <!-- Heroicon name: outline/exclamation-circle -->
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  class="h-6 w-6 text-red-400"
+  class="h-{height} w-{width} text-red-400"
   fill="none"
   viewBox="0 0 24 24"
   stroke="currentColor"

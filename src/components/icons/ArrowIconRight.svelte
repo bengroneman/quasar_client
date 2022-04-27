@@ -1,6 +1,10 @@
+<script>
+  export let width = 6;
+  export let height = 6;
+</script>
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  class="standard-svg"
+  class="standard-svg h-{height} h-{width}"
   fill="none"
   viewBox="0 0 24 24"
   stroke="currentColor"
