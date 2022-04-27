@@ -81,8 +81,10 @@
                     Should the target be greater than the goal?
                   </span>
                   <span class="pt-4 text-gray-500">
-                    target > goal =
-                    <span class="{isChecked ? 'text-danger-red font-bold' : 'text-safe-green font-bold'}">
+                    target > {measure.value_type} =
+                    <span
+                      class={isChecked ? 'text-danger-red font-bold' : 'text-safe-green font-bold'}
+                    >
                       {isChecked ? 'bad' : 'good'}
                     </span>
                   </span>

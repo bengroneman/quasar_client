@@ -9,24 +9,30 @@ const config: PlaywrightTestConfig = {
     {
       name: 'Desktop Chromium',
       use: {
-        browswerName: 'chromium',
-        viewport: { width: 1280, height: 720 },
+        browserName: 'chromium',
+        viewport: { width: 1280, height: 720 }
       }
     },
     {
       name: 'Desktop Firefox',
       use: {
-        browswerName: 'firefox',
-        viewport: { width: 1280, height: 720 },
+        browserName: 'firefox',
+        viewport: { width: 1280, height: 720 }
       }
     },
     {
       name: 'Mobile Chromium',
-      use: devices['Pixel 5'],
+      use: {
+        browserName: 'chromium',
+        viewport: { width: 360, height: 800 }
+      }
     },
     {
       name: 'Mobile Safari',
-      use: devices['IPhone 12'],
+      use: {
+        browserName: 'firefox',
+        viewport: { width: 360, height: 800 }
+      }
     }
   ]
 };

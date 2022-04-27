@@ -1,5 +1,6 @@
 <script>
-  // TODO: fix bug - on sessionstorage update via refresh you have to refresh again for the rows to show back up
+  import { beforeUpdate } from 'svelte';
+
   import { post } from '../helpers/utils';
   import { browser } from '$app/env';
   import _ from 'lodash';
@@ -14,12 +15,20 @@
   let local_departments = [];
   let selectedDepartment = '';
 
-  function addRowToDept (n) {
+  function addRowToDept(n) {
     local_departments.push(n);
-    return n
+    return n;
   }
 
-  $: local_measure_rows = $measure_rows.filter(row => row.dept_name.indexOf(selectedDepartment) !== -1);
+  $: local_measure_rows = $measure_rows.filter(
+    (row) => Array(row.dept_name).indexOf(selectedDepartment) > -1
+  );
+  beforeUpdate(() => {
+    if (local_departments.length >= 1) {
+      local_departments = [];
+    }
+  });
+
   $: local_years = $years;
 
   function editRow(rowIndex) {
@@ -89,7 +98,11 @@
                   <span class="block font-bold pb-4 pt-1">Trios Healthcare</span>
                 </h1>
                 <div class="grid grid-cols-6 w-full gap-4">
-                  <Combobox options={$departments} label="Department" bind:selectedOption={selectedDepartment} />
+                  <Combobox
+                    options={$departments}
+                    label="Department"
+                    bind:selectedOption={selectedDepartment}
+                  />
                 </div>
               </div>
             </div>

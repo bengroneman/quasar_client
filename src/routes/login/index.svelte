@@ -25,7 +25,7 @@
       document.cookie = serialize('token', token);
       const userData = await get(`api/v1/auth/user?email=${email}`);
       userData['logged_in'] = true;
-      delete userData['password']
+      delete userData['password'];
       goto('/scorecard/dashboard');
     }
   }

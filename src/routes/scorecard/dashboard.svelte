@@ -29,10 +29,7 @@
 <p class="mt-1 text-sm text-gray-500">
   Start tracking your metrics, or check in on the progress to acheiving your facilities goals.
 </p>
-<ul
-  role="list"
-  class="mt-6 border-t border-b border-gray-200 py-6 grid grid-cols-1 gap-6 sm:grid-cols-2"
->
+<ul class="mt-6 border-t border-b border-gray-200 py-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
   {#each items as item}
     <li class="flow-root">
       <div

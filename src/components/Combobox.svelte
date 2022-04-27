@@ -7,18 +7,18 @@
   export let selectedOption = '';
   let searching = false;
 
-  const startSearching = () => searching = true;
-  const stopSearching = () => searching = false;
+  const startSearching = () => (searching = true);
+  const stopSearching = () => (searching = false);
 
   function selectOption(event) {
     selectedOption = event.target.innerText;
     setTimeout(() => {
-      searching = false
-    }, 500)
+      searching = false;
+    }, 500);
   }
 
   // Search
-  $: filteredOptions = options.filter(option => Array(option).indexOf(selectedOption));
+  $: filteredOptions = options.filter((option) => Array(option).indexOf(selectedOption));
 </script>
 
 <div class="relative">

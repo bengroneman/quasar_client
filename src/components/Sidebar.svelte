@@ -11,7 +11,6 @@
   import hp_logo from '../assets/trios-uw_chp_v.png';
 
   // Global variables
-  let user;
   let searchTerm = '';
   let navItems = [
     {
@@ -41,7 +40,7 @@
 
   function logoutUser() {
     if (browser) {
-      delete document.cookie
+      delete document.cookie;
       window.sessionStorage.clear();
     }
     goto('/login');
