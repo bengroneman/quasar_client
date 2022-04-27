@@ -1,10 +1,7 @@
 <script>
   import Hero from '../../components/Hero.svelte';
-  import CheckIcon from '../../components/icons/CheckIcon.svelte';
-  import ExclamationIcon from '../../components/icons/ExclamationCircle.svelte';
   import MeasureIcon from '../../components/icons/MeasureIcon.svelte';
   import ChartIcon from '../../components/icons/ChartIcon.svelte';
-  import ArrowIconRight from '../../components/icons/ArrowIconRight.svelte';
 
   const items = [
     {

@@ -1,5 +1,5 @@
 <script>
-  import { beforeUpdate } from 'svelte';
+  import { beforeUpdate, afterUpdate } from 'svelte';
 
   import { post } from '../helpers/utils';
   import { browser } from '$app/env';
@@ -7,14 +7,18 @@
   import { departments, years, measure_rows } from '../lib/mainStore';
 
   import Combobox from './Combobox.svelte';
-  import PlusIcon from './icons/PlusIcon.svelte';
+  import ExternalLinkIcon from './icons/ExternalLinkIcon.svelte';
   import MeasureIcon from './icons/MeasureIcon.svelte';
-  import NewMeasureForm from './forms/NewMeasureForm.svelte';
+  import ScorecardMeasureLineChart from './charts/ScorecardMeasureLineChart.svelte';
   import Modal from './Modal.svelte';
 
   let modalOpen = false;
   let local_departments = [];
+
+  let selectedMeasureID = 0;
   let selectedDepartment = '';
+
+ $: selectedMeasure = _.find($measure_rows, (row) => row.measure_id === selectedMeasureID)
 
   function addRowToDept(n) {
     local_departments.push(n);
@@ -56,7 +60,9 @@
     // Setup the one dimensional array to be passed to MSSQL Server
     let flat_row = _.flatten(_.values(picked_row));
 
-    post('api/v1/scorecard/measure', flat_row, token)
+    // TODO: Ensure token is picked up during standard post call
+    // TODO: Consider using svelte kit fetch instead
+    post('api/v1/scorecard/measure', flat_row)
       .then(() => {
         local_measure_rows[rowIndex].edit = false;
         if (browser) {
@@ -69,16 +75,26 @@
       });
   }
 
-  function modalOn() {
+  function handleMeasureClick(event) {
+    // TODO: look into deprecation of srcElement
+    const elementID = event.srcElement.parentElement.id
+    selectedMeasureID = Number(elementID.split('-').slice(-1));
     modalOpen = true;
+    console.log(selectedMeasure);
+  }
+  // TODO: rework this entirely
+  function rowHasBeenLabeledBefore(i, dept_name) {
+    return i === local_measure_rows.indexOf((val) => val.dept_name === dept_name)
   }
 </script>
 
-{#if modalOpen}
-  <Modal>
-    <NewMeasureForm />
-  </Modal>
-{/if}
+<Modal>
+  <h2>{selectedMeasure['measure_desc']}</h2>
+  <h3>Sub title</h3>
+  <div class="body">
+    <ScorecardMeasureLineChart bind:modalOpen />
+  </div>
+</Modal>
 
 <div class="flex flex-col z-0 w-full">
   <div class="-mx-4">
@@ -132,7 +148,8 @@
                         </tr>
 
                         {#each local_measure_rows as row, index}
-                          {#if local_departments.indexOf(row.dept_name) < 0}
+
+                          {#if rowHasBeenLabeledBefore(index, row.dept_name)}
                             <tr class="border-gray-100 bg-gray-50 table-row">
                               <th
                                 colspan="1"
@@ -142,23 +159,22 @@
                                 <span class="font-bold text-lg">
                                   {addRowToDept(row.dept_name)}
                                 </span>
-                                <div class="input-link-primary flex pt-2">
-                                  <kbd
-                                    class="inline-flex items-center border border-gray-200 rounded px-2 mr-2 text-sm font-sans font-medium text-gray-400"
-                                  >
-                                    <span class="pr-2">Add measure to department</span>
-                                    <PlusIcon />
-                                  </kbd>
-                                </div>
                               </th>
                             </tr>
                           {/if}
                           <tr class="table-row">
-                            <td class="_table-cell text-left fixed-table-cell">
-                              <span class="font-bold word-wrap truncate">
+                            <td
+                              id="measure-{row.measure_id}"
+                              on:click|stopPropagation="{handleMeasureClick}"
+                              class="_table-cell text-left fixed-table-cell cursor-pointer hover:bg-gray-50 flex flex-col relative"
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block standard-svg align-middle -ml-6 absolute" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              </svg>
+                              <span class="font-bold block pl-2 word-wrap truncate">
                                 {row.measure_description}
                               </span>
-                              <span class="block text-sm">JC Criteria: {row.regulation_code}</span>
+                              <span class="block text-sm pl-2">JC Criteria: {row.regulation_code}</span>
                             </td>
                             <td class="_table-cell">
                               {row.goal}

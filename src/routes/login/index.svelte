@@ -35,7 +35,7 @@
   <title>Sign in • Quality Toolkit</title>
 </svelte:head>
 {#if errors}
-  <NotificationPanel message={errors} />
+  <NotificationPanel message={errors.detail} />
 {/if}
 <form method="POST" class="divide-y mx-auto max-w-xs divide-gray-200">
   <div class="space-y-8">
