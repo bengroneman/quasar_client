@@ -1,16 +1,12 @@
 <script>
   import { goto } from '$app/navigation';
   import { post, get } from '../../helpers/utils';
-  import _ from 'lodash';
-
-  import NotificationPanel from '../../components/NotificationPanel.svelte';
 
   import { browser } from '$app/env';
   import { serialize } from 'cookie';
 
   let email = '';
   let password = '';
-  let errors = [];
 
   async function submit() {
     let token;
@@ -21,7 +17,6 @@
       token = response.access_token;
     } catch (e) {
       console.log(e);
-      errors.push(e);
     }
     if (browser && token) {
       document.cookie = serialize('token', token);
@@ -37,9 +32,6 @@
 <svelte:head>
   <title>Sign in • Quality Toolkit</title>
 </svelte:head>
-{#if !_.isEmpty(errors)}
-  <NotificationPanel message={errors[0]} />
-{/if}
 <form method="POST" class="divide-y mx-auto max-w-xs divide-gray-200">
   <div class="space-y-8">
     <div class="mx-auto">
