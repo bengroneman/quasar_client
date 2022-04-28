@@ -5,7 +5,7 @@
 
   // utils
   import { beforeUpdate, afterUpdate } from 'svelte';
-  import { post } from '../helpers/utils';
+  import * as cookie from 'cookie';
   import _ from 'lodash';
 
   // components
@@ -64,24 +64,39 @@
     return '_table-cell';
   }
 
-  function saveRow(row, rowIndex) {
+  async function saveRow(row, rowIndex) {
     let picked_row = _.pick(row, ['dept_id', 'measure_id', 'hospital_id', 'year', 'metrics']);
     // Setup the one dimensional array to be passed to MSSQL Server
     let flat_row = _.flatten(_.values(picked_row));
 
     // TODO: Ensure token is picked up during standard post call
     // TODO: Consider using svelte kit fetch instead
-    post('api/v1/scorecard/measure', flat_row)
-      .then(() => {
+    let auth_token = '';
+    if (browser) {
+      const local_cookie = cookie.parse(document.cookie)
+      auth_token = local_cookie.token
+      console.log(auth_token)
+    }
+    const options = {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify(flat_row || {}),
+      headers: {
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${auth_token}`
+      }
+    }
+    const response = await fetch('api/v1/scorecard/measure', options)
+      .then((res) => {
         local_measure_rows[rowIndex].edit = false;
-        if (browser) {
-          window.sessionStorage.clear();
-        }
+        return res.json();
       })
       .catch((err) => {
         local_measure_rows[rowIndex].edit = false;
         console.error(err);
       });
+    console.log(response)
   }
 
   function handleMeasureClick(event) {
