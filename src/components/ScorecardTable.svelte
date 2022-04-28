@@ -221,6 +221,7 @@
                                 <td class="_table-cell w-fit">
                                   <input
                                     type="text"
+                                    onClick="this.select();"
                                     name="metric"
                                     class="focus:ring-indigo-500 text-center w-full focus:border-indigo-500 block sm:text-sm border-gray-100 rounded-md"
                                     bind:value={metric}

@@ -1,15 +1,22 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import ExclamationCircle from './icons/ExclamationCircle.svelte';
   import XIcon from './icons/XIcon.svelte';
 
   export let message = '';
   export let notificationOpen = true;
   const closeNotification = () => (notificationOpen = false);
+
+  // svelte lifecycle
   onMount(() => {
     setTimeout(() => {
       closeNotification();
     }, 5000);
+  });
+
+  onDestroy(() => {
+    message = '';
+    notificationOpen = true;
   });
 </script>
 

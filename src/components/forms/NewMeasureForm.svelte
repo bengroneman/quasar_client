@@ -81,7 +81,7 @@
             <select
               id="measure-metric-type"
               name="measure-metric-type"
-              bind:value={measure.metric_type}
+              bind:value={measure.val_type}
               class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
             >
               <option value="percentage">Percentage</option>
