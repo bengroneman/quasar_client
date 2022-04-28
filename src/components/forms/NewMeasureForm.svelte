@@ -1,12 +1,29 @@
 <script>
   import Combobox from '../Combobox.svelte';
+  import { post } from '../../helpers/utils.js';
 
-  let measure = {};
+  export let measure = {}
+  let measureDescription = '';
   let isChecked = false;
   export let departments;
   export let jc_codes;
   function toggleSwitch() {
     isChecked = !isChecked;
+  }
+  // TODO: come back to this
+  function parseValueType(valtype) {
+    switch (valtype) {
+      case 'percentage':
+        return measure['value'] = '25.2%'
+      case 'decimal':
+        return measure['value'] = '25.2'
+      default:
+        return measure['value'] = '25'
+    }
+  }
+  function handleSubmit(event) {
+    const newMeasure = new FormData(event.target)
+    post('api/v1/measures/create', newMeasure)
   }
 </script>
 
@@ -18,7 +35,7 @@
         <p class="mt-1 text-sm text-gray-500">Describe the measure from a high level</p>
       </div>
       <div class="mt-5 md:mt-0 md:col-span-2">
-        <form class="space-y-6" action="#" method="POST">
+        <form class="space-y-6" on:submit|preventDefault={handleSubmit}>
           <div class="grid grid-cols-3 gap-6">
             <div class="form-field lg:col-span-1 sm:col-span-3 pl-4">
               <label for="title" class="form-label"> Title </label>
@@ -42,46 +59,36 @@
                 id="measure-description"
                 name="measure-description"
                 rows="3"
+                value={measureDescription}
                 class="shadow-sm form-field focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
                 placeholder="Describe the measure in detail"
               />
             </div>
           </div>
           <div class="grid grid-cols-6 gap-6">
-            <div class="col-span-3">
-              <div class="relative">
+            <div class="col-span-2">
+              <div class="relative form-field flex justify-end">
                 <label for="measure-metric-type" class="form-label">Metric Type</label>
-                <input
-                  type="text"
-                  name="measure-metric-type"
-                  id="measure-metric-type"
-                  bind:value={measure.metric_type}
-                  class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm rounded-md"
-                  placeholder="25"
-                />
-                <div class="absolute inset-y-0 right-0 flex items-center">
-                  <label for="measure-value-type" class="sr-only">Metric value type</label>
                   <select
-                    id="measure-value-type"
-                    name="measure-value-type"
-                    bind:value={measure.value_type}
+                    id="measure-metric-type"
+                    name="measure-metric-type"
+                    bind:value={measure.metric_type}
                     class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
                   >
                     <option value="percentage">Percentage</option>
                     <option value="decimal">Decimal</option>
                     <option value="whole">Whole</option>
                   </select>
-                </div>
               </div>
             </div>
             <div class="col-span-3">
               <div class="flex items-center justify-between">
                 <span class="flex-grow text-sm flex flex-col">
                   <span class="font-medium text-gray-900" id="availability-label">
-                    Should the target be greater than the goal?
+                    Should the metric be greater than the goal?
                   </span>
                   <span class="pt-4 text-gray-500">
-                    target > {measure.value_type} =
+                    metric > goal =
                     <span
                       class={isChecked ? 'text-danger-red font-bold' : 'text-safe-green font-bold'}
                     >
