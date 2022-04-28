@@ -80,21 +80,21 @@
     const elementID = event.srcElement.parentElement.id
     selectedMeasureID = Number(elementID.split('-').slice(-1));
     modalOpen = true;
-    console.log(selectedMeasure);
   }
   // TODO: rework this entirely
   function rowHasBeenLabeledBefore(i, dept_name) {
     return i === local_measure_rows.indexOf((val) => val.dept_name === dept_name)
   }
 </script>
-
-<Modal>
-  <h2>{selectedMeasure['measure_desc']}</h2>
+{#if modalOpen}
+<Modal bind:modalOpen>
+  <h2>{selectedMeasure}</h2>
   <h3>Sub title</h3>
   <div class="body">
-    <ScorecardMeasureLineChart bind:modalOpen />
+    <ScorecardMeasureLineChart metrics="{selectedMeasure['metrics']}" />
   </div>
 </Modal>
+{/if}
 
 <div class="flex flex-col z-0 w-full">
   <div class="-mx-4">
