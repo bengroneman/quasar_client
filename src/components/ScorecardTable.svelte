@@ -64,6 +64,10 @@
     return '_table-cell';
   }
 
+  function getAuthToken() {
+    return browser ? window.sessionStorage.getItem('_qmt_token') : '';
+  }
+
   async function saveRow(row, rowIndex) {
     let picked_row = _.pick(row, ['dept_id', 'measure_id', 'hospital_id', 'year', 'metrics']);
     // Setup the one dimensional array to be passed to MSSQL Server
@@ -71,12 +75,6 @@
 
     // TODO: Ensure token is picked up during standard post call
     // TODO: Consider using svelte kit fetch instead
-    let auth_token = '';
-    if (browser) {
-      const local_cookie = cookie.parse(document.cookie)
-      auth_token = local_cookie.token
-      console.log(auth_token)
-    }
     const options = {
       method: 'POST',
       credentials: 'include',
@@ -84,10 +82,11 @@
       headers: {
         // 'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${auth_token}`
+        Authorization: `Bearer ${getAuthToken()}`
       }
     }
-    const response = await fetch('api/v1/scorecard/measure', options)
+    const baseUrl = 'http://ec2-3-141-37-250.us-east-2.compute.amazonaws.com:4081/'
+    const response = await fetch(`${baseUrl}api/v1/measures/update`, options)
       .then((res) => {
         local_measure_rows[rowIndex].edit = false;
         return res.json();
