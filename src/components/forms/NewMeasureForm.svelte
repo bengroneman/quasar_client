@@ -3,11 +3,11 @@
   import { post } from '../../helpers/utils.js';
   import { onMount } from 'svelte';
 
-  export let measure = {}
+  export let measure = {};
   export let departments;
   export let jc_codes;
 
-  onMount(() =>  measure.good = false)
+  onMount(() => (measure.good = false));
 
   function toggleSwitch() {
     measure.good = !measure.good;
@@ -16,24 +16,26 @@
   function parseValueType(valtype) {
     switch (valtype) {
       case 'percentage':
-        return measure['value'] = '25.2%'
+        return (measure['value'] = '25.2%');
       case 'decimal':
-        return measure['value'] = '25.2'
+        return (measure['value'] = '25.2');
       default:
-        return measure['value'] = '25'
+        return (measure['value'] = '25');
     }
   }
   function clearForm(event) {
-    measure = {}
+    measure = {};
   }
   function handleSubmit(event) {
-    const newMeasure = new FormData(event.target)
-    post('api/v1/measures/create', newMeasure)
+    const newMeasure = new FormData(event.target);
+    post('api/v1/measures/create', newMeasure);
   }
 </script>
 
 <div class="space-y-6">
-  <div class="bg-white mx-auto md:max-w-2xl shadow-sm border border-gray-50 px-4 py-5 sm:rounded-lg sm:p-6">
+  <div
+    class="bg-white mx-auto md:max-w-2xl shadow-sm border border-gray-50 px-4 py-5 sm:rounded-lg sm:p-6"
+  >
     <form class="space-y-6" on:submit|preventDefault={handleSubmit}>
       <div class="grid grid-cols-3 gap-6">
         <div class="form-field lg:col-span-1 sm:col-span-3 pl-4">
@@ -48,8 +50,16 @@
             autocomplete="off"
           />
         </div>
-        <Combobox bind:selectedOption={measure.department} label="Department" options={departments} />
-        <Combobox bind:selectedOption={measure.regulation_code} label="JC Regulation Code" options={jc_codes} />
+        <Combobox
+          bind:selectedOption={measure.department}
+          label="Department"
+          options={departments}
+        />
+        <Combobox
+          bind:selectedOption={measure.regulation_code}
+          label="JC Regulation Code"
+          options={jc_codes}
+        />
       </div>
       <div class="relative">
         <label for="measure-description" class="form-label z-20"> Description </label>
@@ -68,16 +78,16 @@
         <div class="col-span-2">
           <div class="relative form-field flex justify-center">
             <label for="measure-metric-type" class="form-label">Metric Type</label>
-              <select
-                id="measure-metric-type"
-                name="measure-metric-type"
-                bind:value={measure.metric_type}
-                class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
-              >
-                <option value="percentage">Percentage</option>
-                <option value="decimal">Decimal</option>
-                <option value="whole">Whole</option>
-              </select>
+            <select
+              id="measure-metric-type"
+              name="measure-metric-type"
+              bind:value={measure.metric_type}
+              class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
+            >
+              <option value="percentage">Percentage</option>
+              <option value="decimal">Decimal</option>
+              <option value="whole">Whole</option>
+            </select>
           </div>
         </div>
         <div class="col-span-3">

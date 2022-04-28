@@ -24,7 +24,7 @@
   let selectedDepartment = '';
 
   // reactive globals
-  $: selectedMeasure = _.find($measure_rows, (row) => row.measure_id === selectedMeasureID)
+  $: selectedMeasure = _.find($measure_rows, (row) => row.measure_id === selectedMeasureID);
   $: local_measure_rows = $measure_rows.filter(
     (row) => Array(row.dept_name).indexOf(selectedDepartment) > -1
   );
@@ -86,24 +86,32 @@
 
   function handleMeasureClick(event) {
     // TODO: look into deprecation of srcElement
-    const elementID = event.srcElement.parentElement.id
+    const elementID = event.srcElement.parentElement.id;
     selectedMeasureID = Number(elementID.split('-').slice(-1));
     modalOpen = true;
   }
   // TODO: rework this entirely
   function rowHasBeenLabeledBefore(i, dept_name) {
-    return i === local_measure_rows.indexOf((val) => val.dept_name === dept_name)
+    return i === local_measure_rows.indexOf((val) => val.dept_name === dept_name);
   }
 </script>
+
 {#if modalOpen}
-<Modal bind:modalOpen>
-  <h2>{selectedMeasure['measure_description']}</h2>
-  <div class="body">
-    <ScorecardMeasureLineChart goal="{selectedMeasure['goal']}" metrics="{selectedMeasure['metrics']}" />
-  </div>
-  <hr />
-  <NewMeasureForm measure={selectedMeasure} departments={localDepartments} jc_codes={localJCCodes} />
-</Modal>
+  <Modal bind:modalOpen>
+    <h2>{selectedMeasure['measure_description']}</h2>
+    <div class="body">
+      <ScorecardMeasureLineChart
+        goal={selectedMeasure['goal']}
+        metrics={selectedMeasure['metrics']}
+      />
+    </div>
+    <hr />
+    <NewMeasureForm
+      measure={selectedMeasure}
+      departments={localDepartments}
+      jc_codes={localJCCodes}
+    />
+  </Modal>
 {/if}
 
 <div class="flex flex-col z-0 w-full">
@@ -158,7 +166,6 @@
                         </tr>
 
                         {#each local_measure_rows as row, index}
-
                           {#if rowHasBeenLabeledBefore(index, row.dept_name)}
                             <tr class="border-gray-100 bg-gray-50 table-row">
                               <th
@@ -175,16 +182,29 @@
                           <tr class="table-row">
                             <td
                               id="measure-{row.measure_id}"
-                              on:click|stopPropagation="{handleMeasureClick}"
+                              on:click|stopPropagation={handleMeasureClick}
                               class="_table-cell text-left fixed-table-cell cursor-pointer hover:bg-gray-50 flex flex-col relative"
                             >
-                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block standard-svg align-middle -ml-6 absolute" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 inline-block standard-svg align-middle -ml-6 absolute"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
                               </svg>
                               <span class="font-bold block pl-2 word-wrap truncate">
                                 {row.measure_description}
                               </span>
-                              <span class="block text-sm pl-2">JC Criteria: {row.regulation_code}</span>
+                              <span class="block text-sm pl-2"
+                                >JC Criteria: {row.regulation_code}</span
+                              >
                             </td>
                             <td class="_table-cell">
                               {row.goal}

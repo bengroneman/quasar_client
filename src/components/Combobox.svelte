@@ -9,9 +9,9 @@
 
   const startSearching = () => (searching = true);
   const stopSearching = (event) => {
-    console.log(event.srcElement.id.startsWith('combobox'))
+    console.log(event.srcElement.id.startsWith('combobox'));
     searching = false;
-  }
+  };
 
   function handleBodyClick(event) {
     if (!event.srcElement.id.startsWith('combobox')) {
@@ -29,6 +29,7 @@
   // Search
   $: filteredOptions = options.filter((option) => Array(option).indexOf(selectedOption));
 </script>
+
 <svelte:body on:click|stopPropagation={handleBodyClick} />
 
 <div class="relative">
