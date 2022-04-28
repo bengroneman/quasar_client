@@ -1,31 +1,51 @@
 <script>
   import { goto } from '$app/navigation';
   import { post, get } from '../../helpers/utils';
+  import RefreshSpinnerIcon from '../../components/icons/RefreshSpinnerIcon.svelte';
+  import { Jumper } from 'svelte-loading-spinners'
 
   import { browser } from '$app/env';
   import { serialize } from 'cookie';
 
   let email = '';
   let password = '';
+  let loading;
 
   async function submit() {
     let token;
+    const apiUrl = 'http://ec2-3-141-37-250.us-east-2.compute.amazonaws.com:4081/'
+    loading = true;
 
     try {
-      // TODO: abstract this into store logic
-      let response = await post(`api/v1/auth/login?username=${email}&password=${password}`);
-      token = response.access_token;
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+      let response = await fetch(`${apiUrl}api/v1/auth/login?username=${email}&password=${password}`, options);
+      token = await response.json().access_token;
+      goto('/scorecard/');
     } catch (e) {
       console.log(e);
     }
     if (browser && token) {
-      window.location.pathname = '/scorecard/dashboard';
-      document.cookie = serialize('token', token);
       window.sessionStorage.setItem('_qmt_token', token);
-      const userData = await get(`api/v1/auth/user?email=${email}`);
-      userData['logged_in'] = true;
-      delete userData['password'];
+      let userData;
+      try {
+        const res = await fetch(`${apiUrl}api/v1/auth/user?email=${email}`);
+        userData = await res.json();
+        delete userData['password'];
+        Object.entries(userData, (k, v) => {
+          window.sessionStorage.setItem(k, v);
+        });
+      } catch (e) {
+        console.error(e)
+      }
     }
+
+    loading = false;
   }
 </script>
 
@@ -63,6 +83,13 @@
       </div>
     </div>
   </div>
+  {#if loading}
+    <div class="fixed z-10 inset-0 overflow-y-auto">
+      <div class="relative flex mx-auto">
+        <Jumper size="60" color="#FF3E00" unit="px" duration="1s"></Jumper>
+      </div>
+    </div>
+  {/if}
   <div class="pt-5">
     <div class="flex justify-start">
       <button type="button" class="button-secondary"> Cancel </button>
