@@ -7,5 +7,5 @@
   $: localJCCodes = $jc_codes;
 </script>
 
-<Hero center={false}>Create a new measure</Hero>
+<Hero>Create a new measure</Hero>
 <NewMeasureForm departments={localDepartments} jc_codes={localJCCodes} />

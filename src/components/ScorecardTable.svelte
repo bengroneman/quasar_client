@@ -1,40 +1,49 @@
 <script>
-  import { beforeUpdate, afterUpdate } from 'svelte';
-
-  import { post } from '../helpers/utils';
+  // data
+  import { departments, jc_codes, years, measure_rows } from '../lib/mainStore';
   import { browser } from '$app/env';
-  import _ from 'lodash';
-  import { departments, years, measure_rows } from '../lib/mainStore';
 
-  import Combobox from './Combobox.svelte';
-  import ExternalLinkIcon from './icons/ExternalLinkIcon.svelte';
-  import MeasureIcon from './icons/MeasureIcon.svelte';
+  // utils
+  import { beforeUpdate, afterUpdate } from 'svelte';
+  import { post } from '../helpers/utils';
+  import _ from 'lodash';
+
+  // components
   import ScorecardMeasureLineChart from './charts/ScorecardMeasureLineChart.svelte';
+  import ExternalLinkIcon from './icons/ExternalLinkIcon.svelte';
+  import NewMeasureForm from './forms/NewMeasureForm.svelte';
+  import MeasureIcon from './icons/MeasureIcon.svelte';
+  import Combobox from './Combobox.svelte';
   import Modal from './Modal.svelte';
 
+  // globals
   let modalOpen = false;
   let local_departments = [];
 
   let selectedMeasureID = 0;
   let selectedDepartment = '';
 
- $: selectedMeasure = _.find($measure_rows, (row) => row.measure_id === selectedMeasureID)
-
-  function addRowToDept(n) {
-    local_departments.push(n);
-    return n;
-  }
-
+  // reactive globals
+  $: selectedMeasure = _.find($measure_rows, (row) => row.measure_id === selectedMeasureID)
   $: local_measure_rows = $measure_rows.filter(
     (row) => Array(row.dept_name).indexOf(selectedDepartment) > -1
   );
+  $: localDepartments = $departments;
+  $: localJCCodes = $jc_codes;
+  $: local_years = $years;
+
+  // lifecycle hooks
   beforeUpdate(() => {
     if (local_departments.length >= 1) {
       local_departments = [];
     }
   });
 
-  $: local_years = $years;
+  // functions
+  function addRowToDept(n) {
+    local_departments.push(n);
+    return n;
+  }
 
   function editRow(rowIndex) {
     local_measure_rows[rowIndex].edit = true;
@@ -88,11 +97,12 @@
 </script>
 {#if modalOpen}
 <Modal bind:modalOpen>
-  <h2>{selectedMeasure}</h2>
-  <h3>Sub title</h3>
+  <h2>{selectedMeasure['measure_description']}</h2>
   <div class="body">
-    <ScorecardMeasureLineChart metrics="{selectedMeasure['metrics']}" />
+    <ScorecardMeasureLineChart goal="{selectedMeasure['goal']}" metrics="{selectedMeasure['metrics']}" />
   </div>
+  <hr />
+  <NewMeasureForm measure={selectedMeasure} departments={localDepartments} jc_codes={localJCCodes} />
 </Modal>
 {/if}
 

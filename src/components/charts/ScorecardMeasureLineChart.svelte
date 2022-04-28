@@ -5,35 +5,39 @@
     Chart.register(...registerables);
 
     export let metrics;
+    export let goal;
     let canvasElement;
     onMount(() => {
         const ctx = canvasElement.getContext('2d');
         const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Nov', 'Oct', 'Dec']
         const _chart = new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: labels,
-                datasets: [{
-                    label: 'Metric #\'s',
-                    data: metrics,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
+                datasets: [
+                    {
+                        label: 'Metric #\'s',
+                        data: metrics,
+                        backgroundColor: [
+                            '#e879f9',
+                        ],
+                        borderColor: [
+                            '#c026d3',
+                        ],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Goal',
+                        data: labels.map(() => goal),
+                        backgroundColor: [
+                            '#4ade80',
+                        ],
+                        borderColor: [
+                            '#16a34a',
+                        ],
+                        borderWidth: 1
+                    },
+                ]
             },
             options: {
                 scales: {
