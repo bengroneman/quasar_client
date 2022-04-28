@@ -51,7 +51,7 @@
   {/each}
 </ul>
 <div class="mt-4 flex">
-  <a href="/scorecard/overview" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+  <a href="/scorecard" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
     Or start from existing measures
   </a>
 </div>
