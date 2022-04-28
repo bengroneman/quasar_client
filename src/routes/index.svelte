@@ -1,6 +1,7 @@
 <script context="module">
   import { browser } from '$app/env';
   import { goto } from '$app/navigation';
+  import { navigating } from '$app/stores';
 
   export async function load({ session }) {
     if (!session.user) {
@@ -19,7 +20,8 @@
 <svelte:head>
   <title>Quality Toolkit</title>
 </svelte:head>
-
+{#if !navigating}
 <div class="home-page">
   <h1>Hello, home page</h1>
 </div>
+{/if}

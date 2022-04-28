@@ -16,13 +16,13 @@
     {
       icon: HomeIcon,
       title: 'Home',
-      path: '/scorecard/dashboard',
+      path: '/scorecard',
       enabled: true
     },
     {
       icon: ChartIcon,
       title: 'Scorecard Overview',
-      path: '/scorecard/overview',
+      path: '/scorecard/measures',
       enabled: true
     },
     {

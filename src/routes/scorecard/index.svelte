@@ -15,7 +15,7 @@
       title: 'Scorecard Overview',
       description: 'How are we doing? Broken down by department, and year.',
       icon: ChartIcon,
-      href: '/scorecard/overview',
+      href: '/scorecard/measures',
       background: 'bg-green-500'
     }
   ];

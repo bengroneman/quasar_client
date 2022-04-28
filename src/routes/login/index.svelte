@@ -19,12 +19,12 @@
       console.log(e);
     }
     if (browser && token) {
+      window.location.pathname = '/scorecard/dashboard';
       document.cookie = serialize('token', token);
       window.sessionStorage.setItem('_qmt_token', token);
       const userData = await get(`api/v1/auth/user?email=${email}`);
       userData['logged_in'] = true;
       delete userData['password'];
-      goto('/scorecard/dashboard');
     }
   }
 </script>
