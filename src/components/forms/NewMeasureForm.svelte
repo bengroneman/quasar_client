@@ -2,6 +2,7 @@
   import Combobox from '../Combobox.svelte';
   import { post } from '../../helpers/utils.js';
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
 
   export let measure = {};
   export let departments;
@@ -23,8 +24,9 @@
         return (measure['value'] = '25');
     }
   }
-  function clearForm(event) {
+  function clearForm() {
     measure = {};
+    goto('/scorecard/measures')
   }
   function handleSubmit(event) {
     const newMeasure = new FormData(event.target);

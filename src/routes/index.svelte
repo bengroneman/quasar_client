@@ -21,7 +21,7 @@
   <title>Quality Toolkit</title>
 </svelte:head>
 {#if !navigating}
-<div class="home-page">
-  <h1>Hello, home page</h1>
-</div>
+  <div class="home-page">
+    <h1>Hello, home page</h1>
+  </div>
 {/if}

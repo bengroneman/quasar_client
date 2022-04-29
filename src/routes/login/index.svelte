@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation';
   import { post, get } from '../../helpers/utils';
   import RefreshSpinnerIcon from '../../components/icons/RefreshSpinnerIcon.svelte';
-  import { Jumper } from 'svelte-loading-spinners'
+  import { Jumper } from 'svelte-loading-spinners';
 
   import { browser } from '$app/env';
   import { serialize } from 'cookie';
@@ -13,18 +13,20 @@
 
   async function submit() {
     let token;
-    const apiUrl = 'http://ec2-3-141-37-250.us-east-2.compute.amazonaws.com:4081/'
+    const apiUrl = 'http://ec2-3-141-37-250.us-east-2.compute.amazonaws.com:4081/';
     loading = true;
 
     try {
-
       const options = {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         }
-      }
-      let response = await fetch(`${apiUrl}api/v1/auth/login?username=${email}&password=${password}`, options);
+      };
+      let response = await fetch(
+        `${apiUrl}api/v1/auth/login?username=${email}&password=${password}`,
+        options
+      );
       token = await response.json().access_token;
       goto('/scorecard/');
     } catch (e) {
@@ -41,7 +43,7 @@
           window.sessionStorage.setItem(k, v);
         });
       } catch (e) {
-        console.error(e)
+        console.error(e);
       }
     }
 
@@ -86,7 +88,7 @@
   {#if loading}
     <div class="fixed z-10 inset-0 overflow-y-auto">
       <div class="relative flex mx-auto">
-        <Jumper size="60" color="#FF3E00" unit="px" duration="1s"></Jumper>
+        <Jumper size="60" color="#FF3E00" unit="px" duration="1s" />
       </div>
     </div>
   {/if}

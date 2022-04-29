@@ -84,8 +84,8 @@
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getAuthToken()}`
       }
-    }
-    const baseUrl = 'http://ec2-3-141-37-250.us-east-2.compute.amazonaws.com:4081/'
+    };
+    const baseUrl = 'http://ec2-3-141-37-250.us-east-2.compute.amazonaws.com:4081/';
     const response = await fetch(`${baseUrl}api/v1/measures/update`, options)
       .then((res) => {
         local_measure_rows[rowIndex].edit = false;
@@ -95,7 +95,7 @@
         local_measure_rows[rowIndex].edit = false;
         console.error(err);
       });
-    console.log(response)
+    console.log(response);
   }
 
   function handleMeasureClick(event) {
@@ -113,6 +113,7 @@
 {#if modalOpen}
   <Modal bind:modalOpen>
     <h2>{selectedMeasure['measure_description']}</h2>
+    <h3>JC Criteria: <strong>{selectedMeasure['regulation_code']}</strong></h3>
     <div class="body">
       <ScorecardMeasureLineChart
         goal={selectedMeasure['goal']}
@@ -120,11 +121,9 @@
       />
     </div>
     <hr />
-    <NewMeasureForm
-      measure={selectedMeasure}
-      departments={localDepartments}
-      jc_codes={localJCCodes}
-    />
+    <div class="content">
+      {selectedMeasure['measure']}
+    </div>
   </Modal>
 {/if}
 
@@ -132,11 +131,6 @@
   <div class="-mx-4">
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
       <div class="shadow overflow-hidden border-b border-gray-100 sm:rounded-lg">
-        <div class="flex justify-end mt-4 pt-4 pr-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <a href="/scorecard/measures/create" type="button" class="button-primary">
-            Create Measure
-          </a>
-        </div>
         <!-- START Oversight Row -->
         <div>
           <div class="px-4 py-6 sm:px-6 lg:px-8">
