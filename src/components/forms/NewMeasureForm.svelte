@@ -3,6 +3,7 @@
   import { post } from '../../helpers/utils.js';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import { browser } from '$app/env';
 
   export let measure = {};
   export let departments;
@@ -28,10 +29,14 @@
     measure = {};
     goto('/scorecard/measures');
   }
-  function handleSubmit(event) {
-    const newMeasure = new FormData(event.target);
-    post('api/v1/measures/create', newMeasure);
-    // TODO: notify user of status
+  function handleSubmit() {
+    // let token = undefined;
+    // if (browser) {
+    //   token = window.sessionStorage.getItem('_qmt_token');
+    // }
+    // if (token) {
+    //   post('api/v1/measures/create', measure, token);
+    // }
   }
 </script>
 
@@ -39,7 +44,7 @@
   <div
     class="bg-white mx-auto md:max-w-2xl shadow-sm border border-gray-50 px-4 py-5 sm:rounded-lg sm:p-6"
   >
-    <form class="space-y-6" on:submit|preventDefault={handleSubmit}>
+    <form class="space-y-6">
       <div class="grid grid-cols-3 gap-6">
         <div class="form-field lg:col-span-1 sm:col-span-3 pl-4">
           <label for="title" class="form-label"> Title </label>
@@ -136,7 +141,9 @@
         >
         <button
           type="submit"
-          class="button-primary"
+          on:click={handleSubmit}
+          class="button-danger cursor-not-allowed"
+          disabled
           >Save</button
         >
       </div>
