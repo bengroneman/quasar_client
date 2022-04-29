@@ -13,16 +13,18 @@
   let searching = false;
 
   // Search
-  $: filteredInOptions = selectedOption ?
-     options.filter(option => {
-       return option.toLowerCase().startsWith(`${selectedOption.toLowerCase()}`)
-     }) : options;
+  $: filteredInOptions = selectedOption
+    ? options.filter((option) => {
+        return option.toLowerCase().startsWith(`${selectedOption.toLowerCase()}`);
+      })
+    : options;
 
   // TODO: Build out a secondary row for not found items in light gray
-  $: filteredOutOptions = selectedOption ?
-     options.filter(option => {
-       return !option.toLowerCase().startsWith(`${selectedOption.toLowerCase()}`)
-     }) : [];
+  $: filteredOutOptions = selectedOption
+    ? options.filter((option) => {
+        return !option.toLowerCase().startsWith(`${selectedOption.toLowerCase()}`);
+      })
+    : [];
 
   // helper functions
   const startSearching = () => (searching = true);
@@ -89,19 +91,19 @@
       {/each}
       {#if filteredOutOptions.length > 0}
         {#each filteredOutOptions as option, index}
-        <li
-          on:click={selectOption}
-          class="relative cursor-default select-none py-2 pl-8 pr-4 text-gray-200 hover:bg-gray-200 hover:text-gray-800"
-          id={'out-option-' + index}
-          role="option"
-          tabindex="-1"
-        >
-          <span class="block truncate">{option}</span>
-          <span class="absolute inset-y-0 left-0 flex items-center pl-1.5 text-cyber-grape">
-            <CheckIcon class="text-cyber-grape" />
-          </span>
-        </li>
-      {/each}
+          <li
+            on:click={selectOption}
+            class="relative cursor-default select-none py-2 pl-8 pr-4 text-gray-200 hover:bg-gray-200 hover:text-gray-800"
+            id={'out-option-' + index}
+            role="option"
+            tabindex="-1"
+          >
+            <span class="block truncate">{option}</span>
+            <span class="absolute inset-y-0 left-0 flex items-center pl-1.5 text-cyber-grape">
+              <CheckIcon class="text-cyber-grape" />
+            </span>
+          </li>
+        {/each}
       {/if}
       <!-- More items... -->
     </ul>

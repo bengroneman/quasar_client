@@ -26,7 +26,7 @@
   }
   function clearForm() {
     measure = {};
-    goto('/scorecard/measures')
+    goto('/scorecard/measures');
   }
   function handleSubmit(event) {
     const newMeasure = new FormData(event.target);
