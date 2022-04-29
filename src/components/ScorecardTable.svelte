@@ -104,6 +104,7 @@
     selectedMeasureID = Number(elementID.split('-').slice(-1));
     modalOpen = true;
   }
+  const modalOff = () => modalOpen = false;
   // TODO: rework this entirely
   function rowHasBeenLabeledBefore(i, dept_name) {
     return i === local_measure_rows.indexOf((val) => val.dept_name === dept_name);
@@ -121,8 +122,10 @@
       />
     </div>
     <hr />
-    <div class="content">
-      {selectedMeasure['measure']}
+    <div class="content pt-4 -ml-2 flex">
+     <button on:click|self={modalOff} class="button-danger">
+       Cancel
+     </button>
     </div>
   </Modal>
 {/if}

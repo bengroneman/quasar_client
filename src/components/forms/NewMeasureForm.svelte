@@ -31,6 +31,7 @@
   function handleSubmit(event) {
     const newMeasure = new FormData(event.target);
     post('api/v1/measures/create', newMeasure);
+    // TODO: notify user of status
   }
 </script>
 
@@ -57,11 +58,19 @@
           label="Department"
           options={departments}
         />
-        <Combobox
-          bind:selectedOption={measure.regulation_code}
-          label="JC Regulation Code"
-          options={jc_codes}
-        />
+        <div class="form-field col-span-1">
+          <label for="measure-regulation-code" class="form-label">JC Regulation Code</label>
+          <select
+            id="measure-regulation-code"
+            name="measure-regulation-code"
+            bind:value={measure.regulation_code}
+            class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
+          >
+            {#each jc_codes as code}
+              <option>{code}</option>
+            {/each}
+          </select>
+        </div>
       </div>
       <div class="relative">
         <label for="measure-description" class="form-label z-20"> Description </label>
@@ -122,12 +131,12 @@
         <button
           type="button"
           on:click={clearForm}
-          class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          class="button-secondary"
           >Cancel</button
         >
         <button
           type="submit"
-          class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          class="button-primary"
           >Save</button
         >
       </div>

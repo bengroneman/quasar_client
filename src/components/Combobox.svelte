@@ -7,7 +7,7 @@
   import SelectorIcon from '../components/icons/SelectorIcon.svelte';
 
   // global variables
-  export let options = ['All'];
+  export let options = [];
   export let label;
   export let selectedOption = undefined;
   let searching = false;
@@ -15,7 +15,9 @@
   // Search
   $: filteredInOptions = selectedOption
     ? options.filter((option) => {
-        return option.toLowerCase().startsWith(`${selectedOption.toLowerCase()}`);
+        if (typeof option === typeof '') {
+          return option.toLowerCase().startsWith(`${selectedOption.toLowerCase()}`);
+        }
       })
     : options;
 

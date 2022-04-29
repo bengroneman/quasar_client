@@ -14,8 +14,10 @@
       let _years = _.uniq(year_values);
 
       let jc_code_values = response.map((val) => {
-        if (val.regulation_code !== 'null') {
-          return val.regulation_code;
+        if (val.regulation_code !== null && val.regulation_code !== undefined){
+          if (typeof val.regulation_code === typeof ''){
+            return String(val.regulation_code)
+          }
         }
       });
       let _jc_codes = _.uniq(jc_code_values);
