@@ -3,7 +3,6 @@
   import { post } from '../../helpers/utils.js';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { browser } from '$app/env';
 
   export let measure = {};
   export let departments;
@@ -46,7 +45,7 @@
   >
     <form class="space-y-6">
       <div class="grid grid-cols-3 gap-6">
-        <div class="form-field lg:col-span-1 sm:col-span-3 pl-4">
+        <div class="form-field lg:col-span-2 sm:col-span-3 pl-4">
           <label for="title" class="form-label"> Title </label>
           <input
             id="title"
@@ -58,12 +57,7 @@
             autocomplete="off"
           />
         </div>
-        <Combobox
-          bind:selectedOption={measure.department}
-          label="Department"
-          options={departments}
-        />
-        <div class="form-field col-span-1">
+        <div class="form-field lg:col-span-1 sm:col-span-3">
           <label for="measure-regulation-code" class="form-label">JC Regulation Code</label>
           <select
             id="measure-regulation-code"

@@ -22,7 +22,7 @@
   ];
 </script>
 
-<Hero center={false}>Hello, {$user.name}</Hero>
+<Hero center={false}>Hello,</Hero>
 <h2 class="text-lg font-medium text-gray-900">Projects</h2>
 <p class="mt-1 text-sm text-gray-500">
   Start tracking your metrics, or check in on the progress to acheiving your facilities goals.
