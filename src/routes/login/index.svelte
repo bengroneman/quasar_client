@@ -11,10 +11,11 @@
   let password = '';
   let loading;
 
-  async function submit() {
+  async function submit(event) {
+    let formData = new FormData(event.target)
     loading = true;
     try {
-      const response = await post('api/v1/auth/login', { username: email, password: password });
+      const response = await post('api/v1/auth/login', formData)
       // maybe place this in the session for access to fetch the user data later
       let token = response.access_token;
       if (browser) {
@@ -36,17 +37,17 @@
 <svelte:head>
   <title>Sign in • Quality Toolkit</title>
 </svelte:head>
-<form method="POST" class="divide-y mx-auto max-w-xs divide-gray-200">
+<form method="POST" on:submit|preventDefault={submit} class="divide-y mx-auto max-w-xs divide-gray-200">
   <div class="space-y-8">
     <div class="mx-auto">
       <div class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-4">
         <div class="form-field pl-4">
-          <label for="email" class="form-label"> Email </label>
+          <label for="username" class="form-label"> Email </label>
           <input
-            id="email"
+            id="username"
             bind:value={email}
             type="text"
-            name="email"
+            name="username"
             class="form-input"
             placeholder="Company Email"
             autocomplete="emailaddress"
@@ -67,6 +68,14 @@
       </div>
     </div>
   </div>
+
+  <div class="pt-5">
+    <div class="flex justify-start">
+      <button type="submit" class="button-primary">
+        Sign in
+      </button>
+    </div>
+  </div>
   {#if loading}
     <div class="fixed z-10 inset-0 overflow-y-auto">
       <div class="relative flex mx-auto">
@@ -74,12 +83,4 @@
       </div>
     </div>
   {/if}
-  <div class="pt-5">
-    <div class="flex justify-start">
-      <button type="button" class="button-secondary"> Cancel </button>
-      <button on:click|preventDefault={submit} type="submit" class="button-primary">
-        Submit
-      </button>
-    </div>
-  </div>
 </form>
