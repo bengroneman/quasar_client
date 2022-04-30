@@ -16,7 +16,7 @@
   }
 
   h2 {
-    @apply text-2xl font-bold text-d-purple pt-4;
+    @apply text-2xl font-bold text-d-purple;
   }
 
   h1,
@@ -61,7 +61,7 @@
   .sub-heading {
     @apply text-2xl font-bold text-dark-orchid sm:text-3xl md:text-4xl pt-4;
   }
-  a.nuxt-link-active {
+  a.link-active {
     @apply bg-indigo-50 border-indigo-600 text-indigo-600;
   }
   .navbar-item {
