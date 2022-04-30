@@ -19,9 +19,6 @@
   }
 </script>
 
-<script>
-</script>
-
 <div class="min-h-full">
   <slot />
 </div>

@@ -133,18 +133,12 @@
         </div>
       </div>
       <div class="flex justify-end pb-6">
-        <button
-          type="button"
-          on:click={clearForm}
-          class="button-secondary"
-          >Cancel</button
-        >
+        <button type="button" on:click={clearForm} class="button-secondary">Cancel</button>
         <button
           type="submit"
           on:click={handleSubmit}
           class="button-danger cursor-not-allowed"
-          disabled
-          >Save</button
+          disabled>Save</button
         >
       </div>
     </form>

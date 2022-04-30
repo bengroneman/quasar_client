@@ -5,7 +5,7 @@
 
   import { browser } from '$app/env';
   import { serialize } from 'cookie';
-  import { user } from '../../store/userStore.js'
+  import { user } from '../../store/userStore.js';
 
   let email = '';
   let password = '';
@@ -14,17 +14,16 @@
   async function submit() {
     loading = true;
     try {
-      const response = await post('api/v1/auth/login', {username: email, password: password});
+      const response = await post('api/v1/auth/login', { username: email, password: password });
       // maybe place this in the session for access to fetch the user data later
       let token = response.access_token;
       if (browser) {
-        document.cookie = serialize('_qmt_token', token)
+        document.cookie = serialize('_qmt_token', token);
       }
 
       const _tempUser = await get(`api/v1/auth/user?email=${email}`);
       delete _tempUser['password'];
       user.set(_tempUser);
-
     } catch (e) {
       console.error(e);
     } finally {
