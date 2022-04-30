@@ -7,7 +7,7 @@
 
   export let measure = {};
   export let departments;
-  export let jc_codes;
+  export let regulations;
 
   onMount(() => (measure.good = false));
 
@@ -71,8 +71,8 @@
             bind:value={measure.regulation_code}
             class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
           >
-            {#each jc_codes as code}
-              <option>{code}</option>
+            {#each regulations as reg}
+              <option>{reg}</option>
             {/each}
           </select>
         </div>

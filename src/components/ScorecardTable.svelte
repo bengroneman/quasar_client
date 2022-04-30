@@ -1,16 +1,14 @@
 <script>
   // data
-  import { departments, jc_codes, years, measure_rows } from '../lib/mainStore';
+  import { departments, regulations, years, measureRows } from '../store/mainStore';
   import { browser } from '$app/env';
 
   // utils
-  import { beforeUpdate, afterUpdate } from 'svelte';
-  import * as cookie from 'cookie';
+  import { beforeUpdate } from 'svelte';
   import _ from 'lodash';
 
   // components
   import ScorecardMeasureLineChart from './charts/ScorecardMeasureLineChart.svelte';
-  import ExternalLinkIcon from './icons/ExternalLinkIcon.svelte';
   import NewMeasureForm from './forms/NewMeasureForm.svelte';
   import MeasureIcon from './icons/MeasureIcon.svelte';
   import Combobox from './Combobox.svelte';
@@ -24,13 +22,10 @@
   let selectedDepartment = '';
 
   // reactive globals
-  $: selectedMeasure = _.find($measure_rows, (row) => row.measure_id === selectedMeasureID);
-  $: local_measure_rows = $measure_rows.filter(
+  $: selectedMeasure = _.find($measureRows, (row) => row.measure_id === selectedMeasureID);
+  $: local_measure_rows = $measureRows.filter(
     (row) => Array(row.dept_name).indexOf(selectedDepartment) > -1
   );
-  $: localDepartments = $departments;
-  $: localJCCodes = $jc_codes;
-  $: local_years = $years;
 
   // lifecycle hooks
   beforeUpdate(() => {

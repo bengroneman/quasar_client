@@ -1,11 +1,10 @@
 <script>
   import { goto } from '$app/navigation';
-  import { post, get } from '../../helpers/utils';
-  import RefreshSpinnerIcon from '../../components/icons/RefreshSpinnerIcon.svelte';
   import { Jumper } from 'svelte-loading-spinners';
 
   import { browser } from '$app/env';
   import { serialize } from 'cookie';
+  import { user } from '../../store/userStore.js'
 
   let email = '';
   let password = '';
@@ -27,26 +26,28 @@
         `${apiUrl}api/v1/auth/login?username=${email}&password=${password}`,
         options
       );
+      // maybe place this in the session for access to fetch the user data later
       token = await response.json().access_token;
-      goto('/scorecard/');
     } catch (e) {
       console.log(e);
     }
-    if (browser && token) {
-      window.sessionStorage.setItem('_qmt_token', token);
-      let userData;
-      try {
-        const res = await fetch(`${apiUrl}api/v1/auth/user?email=${email}`);
-        userData = await res.json();
-        delete userData['password'];
-        Object.entries(userData, (k, v) => {
-          window.sessionStorage.setItem(k, v);
-        });
-      } catch (e) {
-        console.error(e);
+    try {
+      const options = {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          authorization: `bearer ${token}`,
+        }
       }
-    }
+      const res = await fetch(`${apiUrl}api/v1/auth/user?email=${email}`, options);
 
+      const _tempUser = await res.json();
+      delete _tempUser['password'];
+      user.set(_tempUser);
+    } catch (e) {
+      console.error(e);
+    }
+    goto('/scorecard/');
     loading = false;
   }
 </script>
