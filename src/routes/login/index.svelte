@@ -1,6 +1,7 @@
 <script>
   import { goto } from '$app/navigation';
   import { Jumper } from 'svelte-loading-spinners';
+  import { get, post } from '../../lib/api';
 
   import { browser } from '$app/env';
   import { serialize } from 'cookie';
@@ -11,44 +12,25 @@
   let loading;
 
   async function submit() {
-    let token;
-    const apiUrl = 'http://ec2-3-141-37-250.us-east-2.compute.amazonaws.com:4081/';
     loading = true;
-
     try {
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-      let response = await fetch(
-        `${apiUrl}api/v1/auth/login?username=${email}&password=${password}`,
-        options
-      );
+      const response = await post('api/v1/auth/login', {username: email, password: password});
       // maybe place this in the session for access to fetch the user data later
-      token = await response.json().access_token;
-    } catch (e) {
-      console.log(e);
-    }
-    try {
-      const options = {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          authorization: `bearer ${token}`,
-        }
+      let token = response.access_token;
+      if (browser) {
+        document.cookie = serialize('_qmt_token', token)
       }
-      const res = await fetch(`${apiUrl}api/v1/auth/user?email=${email}`, options);
 
-      const _tempUser = await res.json();
+      const _tempUser = await get(`api/v1/auth/user?email=${email}`);
       delete _tempUser['password'];
       user.set(_tempUser);
+
     } catch (e) {
       console.error(e);
+    } finally {
+      loading = false;
+      goto('/scorecard/');
     }
-    goto('/scorecard/');
-    loading = false;
   }
 </script>
 
