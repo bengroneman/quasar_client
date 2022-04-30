@@ -11,11 +11,10 @@
   let password = '';
   let loading;
 
-  async function submit(event) {
-    let formData = new FormData(event.target)
+  async function submit() {
     loading = true;
     try {
-      const response = await post('api/v1/auth/login', formData)
+      const response = await post('api/v1/auth/login', {username: email, password: password})
       // maybe place this in the session for access to fetch the user data later
       let token = response.access_token;
       if (browser) {
