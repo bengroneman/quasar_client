@@ -2,6 +2,10 @@
   import Hero from '../../components/Hero.svelte';
 </script>
 
+<svelte:head>
+  <title>Quality Toolkit | Login</title>
+</svelte:head>
+
 <div class="container mx-auto sm:px-6 lg:px-4">
   <!-- insert messages/notifications -->
   <Hero center={true}>Quality Toolkit</Hero>

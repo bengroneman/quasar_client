@@ -85,26 +85,29 @@
         </div>
       </div>
       <div class="grid grid-cols-6 gap-6">
-        <div class="col-span-2">
+        <div class="col-span-3">
           <div class="relative form-field flex justify-center">
-            <label for="measure-metric-type" class="form-label">Metric Type</label>
-            <select
-              id="measure-metric-type"
-              name="measure-metric-type"
-              bind:value={measure.val_type}
-              class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
-            >
-              <option value="percentage">Percentage</option>
-              <option value="decimal">Decimal</option>
-              <option value="whole">Whole</option>
-            </select>
+            <label for="measure-metric-type" class="form-label">Goal</label>
+            <input type="text" name="measure-goal" id="measure-goal" class="form-input pl-8" placeholder="90">
+            <div class="absolute inset-y-0 right-0 flex items-center">
+              <select
+                id="measure-metric-type"
+                name="measure-metric-type"
+                bind:value={measure.val_type}
+                class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
+              >
+                <option value="percentage">Percentage</option>
+                <option value="decimal">Decimal</option>
+                <option value="whole">Whole</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="col-span-3">
           <div class="flex items-center justify-between">
             <span class="flex-grow text-sm flex flex-col">
               <span class="font-medium text-gray-900" id="availability-label">
-                Should the metric be greater than the goal?
+                Should the target metric be greater than the goal?
               </span>
             </span>
             <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
